@@ -1,0 +1,26 @@
+{
+  "name": "AWS Security Workshop",
+  "language": "Spanish",
+  "files": [
+    {
+      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/README.md",
+      "order": 1
+    },
+    {
+      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/01-getting-started.md",
+      "order": 2
+    },
+    {
+      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/02-iam-security.md",
+      "order": 3
+    },
+    {
+      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/03-cloudtrail-monitoring.md",
+      "order": 4
+    },
+    {
+      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/summary.md",
+      "order": 5
+    }
+  ]
+}
