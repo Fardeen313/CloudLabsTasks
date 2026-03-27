@@ -2,14 +2,14 @@
 
 Welcome to the **Advanced AWS Security Workshop** by Contoso Training Institute.
 
-In this lab you will learn advanced AWS security concepts and monitoring techniques.
+In this workshop you will explore advanced AWS security services and best practices.
 
-## What you will learn
+## What You Will Learn
 
-- AWS Identity and Access Management (IAM)
-- AWS CloudTrail monitoring
-- AWS security best practices
-- Logging and auditing
+• AWS IAM security best practices  
+• CloudTrail monitoring  
+• Security auditing  
+• AWS account level protection  
 
 ## Lab Environment
 
@@ -17,15 +17,15 @@ Each participant receives:
 
 - A dedicated AWS account
 - A Windows virtual machine
-- Preinstalled tools
+- Pre-installed development tools
 
 ### Installed Tools
 
-- Power BI
-- Power Automate
-- n8n
-- VS Code
-- Brave Browser
-- Git Bash
+• Power BI  
+• Power Automate  
+• n8n  
+• VS Code  
+• Brave Browser  
+• Git Bash  
 
-In the next exercise you will access the AWS environment.
+In the next exercise you will access your AWS environment.

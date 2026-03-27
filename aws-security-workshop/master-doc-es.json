@@ -3,23 +3,23 @@
   "language": "Spanish",
   "files": [
     {
-      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/README.md",
+      "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/README.md",
       "order": 1
     },
     {
-      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/01-getting-started.md",
+      "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/01-getting-started.md",
       "order": 2
     },
     {
-      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/02-iam-security.md",
+      "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/02-iam-security.md",
       "order": 3
     },
     {
-      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/03-cloudtrail-monitoring.md",
+      "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/03-cloudtrail-monitoring.md",
       "order": 4
     },
     {
-      "rawFilePath": "https://raw.githubusercontent.com/YOUR-USERNAME/aws-security-workshop/main/Instructions/es/summary.md",
+      "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/summary.md",
       "order": 5
     }
   ]
