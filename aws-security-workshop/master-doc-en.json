@@ -1,7 +1,7 @@
 [
   {
     "title": "AWS Security Workshop",
-    "language": "EN",
+    "language": "English",
     "files": [
       {
         "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/README.md",
@@ -27,7 +27,7 @@
   },
   {
     "title": "AWS Security Workshop",
-    "language": "ES",
+    "language": "Español",
     "files": [
       {
         "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/README.md",
