@@ -1,6 +1,6 @@
 {
-  "name": "AWS Security Workshop",
-  "language": "English",
+  "title": "AWS Security Workshop",
+  "language": "en",
   "files": [
     {
       "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/README.md",
