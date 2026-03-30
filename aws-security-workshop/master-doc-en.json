@@ -1,56 +1,54 @@
 [
   {
-  "title": "AWS Security Workshop",
-  "languages": {
-    "en": {
-      "files": [
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/README.md",
-          "order": 1
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/01-getting-started.md",
-          "order": 2
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/02-iam-security.md",
-          "order": 3
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/03-cloudtrail-monitoring.md",
-          "order": 4
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/summary.md",
-          "order": 5
-        }
-      ]
-    },
-
-    "es": {
-      "files": [
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/README.md",
-          "order": 1
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/01-getting-started.md",
-          "order": 2
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/02-iam-security.md",
-          "order": 3
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/03-cloudtrail-monitoring.md",
-          "order": 4
-        },
-        {
-          "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/summary.md",
-          "order": 5
-        }
-      ]
-    }
+    "title": "AWS Security Workshop",
+    "language": "en",
+    "files": [
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/README.md",
+        "order": 1
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/01-getting-started.md",
+        "order": 2
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/02-iam-security.md",
+        "order": 3
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/03-cloudtrail-monitoring.md",
+        "order": 4
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/en/summary.md",
+        "order": 5
+      }
+    ]
+  },
+  {
+    "title": "AWS Security Workshop",
+    "language": "es",
+    "files": [
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/README.md",
+        "order": 1
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/01-getting-started.md",
+        "order": 2
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/02-iam-security.md",
+        "order": 3
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/03-cloudtrail-monitoring.md",
+        "order": 4
+      },
+      {
+        "rawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/summary.md",
+        "order": 5
+      }
+    ]
   }
-}
 ]
