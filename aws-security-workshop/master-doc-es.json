@@ -1,4 +1,5 @@
-{
+[
+  {
   "name": "AWS Security Workshop",
   "language": "Spanish",
   "files": [
@@ -24,3 +25,4 @@
     }
   ]
 }
+]
