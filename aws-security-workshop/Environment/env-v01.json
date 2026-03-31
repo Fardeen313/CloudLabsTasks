@@ -38,7 +38,7 @@
         },
         "VMPassword": {
             "Type": "String",
-            "Default": "LabPassword@123"
+            "Default": "LabPassword123"
         }
     },
     "Resources": {
