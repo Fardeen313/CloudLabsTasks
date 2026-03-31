@@ -34,7 +34,7 @@
         },
         "VMUserName": {
             "Type": "String",
-            "Default": "Administrator"
+            "Default": "Labuser"
         },
         "VMPassword": {
             "Type": "String",
