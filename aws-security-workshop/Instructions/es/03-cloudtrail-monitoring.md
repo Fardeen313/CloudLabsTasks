@@ -78,7 +78,6 @@ AWS CloudTrail registra **toda la actividad de API** en tu cuenta de AWS — bri
 
 4. Asegúrate de que **Todas las Regiones** esté habilitado.
 
-   ![Todas las Regiones](https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/Images/ex3-task2-all-regions.png)
 
 5. Haz clic en **Crear trail**.
 

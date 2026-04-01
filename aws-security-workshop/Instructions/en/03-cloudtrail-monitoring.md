@@ -77,8 +77,6 @@ AWS CloudTrail records **all API activity** in your AWS account — giving you f
 
 4. Ensure **All Regions** is enabled to capture activity across your entire account.
 
-   ![All Regions](https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/Images/ex3-task2-all-regions.png)
-
 5. Click **Create Trail**.
 
    ![Create Trail Final](https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/Images/ex3-task2-create-trail-final.png)
