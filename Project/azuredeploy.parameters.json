@@ -21,7 +21,7 @@
             "value": "labuser"
         },
         "adminPassword": {
-            "value": "Password.1!!"
+            "value": "Password123456789"
         },
         "vmSize": {
             "value": "Standard_D2s_v3"
