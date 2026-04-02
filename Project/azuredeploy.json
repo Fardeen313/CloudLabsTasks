@@ -244,35 +244,35 @@
         }
     ],
     "outputs": {
-        "VM DNS Name": {
+        "VMDNSName": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).dnsSettings.fqdn]"
         },
-        "VM Admin Username": {
+        "VMAdminUsername": {
             "type": "string",
             "value": "[parameters('adminUsername')]"
         },
-        "VM Admin Password": {
+        "VMAdminPassword": {
             "type": "string",
             "value": "[parameters('adminPassword')]"
         },
-        "VM Name": {
+        "VMName": {
             "type": "string",
             "value": "[variables('vmName')]"
         },
-        "VM Private IP": {
+        "VMPrivateIP": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))).ipConfigurations[0].properties.privateIPAddress]"
         },
-        "Resource Group": {
+        "ResourceGroup": {
             "type": "string",
             "value": "[resourceGroup().name]"
         },
-        "Subscription ID": {
+        "SubscriptionID": {
             "type": "string",
             "value": "[subscription().subscriptionId]"
         },
-        "Tenant ID": {
+        "TenantID": {
             "type": "string",
             "value": "[parameters('TenantID')]"
         }
