@@ -13,8 +13,7 @@
             "Default": "GET-SECRET-KEY"
         },
         "CheckAcknowledgement": {
-            "Type": "String",
-            "Default": "TRUE"
+            "Value": "TRUE"
         },
         "vpcCidr": {
             "Type": "String",
