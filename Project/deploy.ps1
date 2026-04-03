@@ -16,6 +16,9 @@ $spCred = New-Object System.Management.Automation.PSCredential($AppID, $spSecret
 Connect-AzAccount -ServicePrincipal -Credential $spCred -TenantId $AzureTenantID | Out-Null
 Set-AzContext -SubscriptionId $AzureSubscriptionID | Out-Null
 
+$AzureTenantID = (Get-AzContext).Tenant.Id
+$AzureSubscriptionID = (Get-AzContext).Subscription.Id
+
 $vmName = "labvm-$DeploymentID"
 $resourceGroup = (Get-AzResourceGroup | Where-Object { $_.ResourceGroupName -like "*$DeploymentID*" }).ResourceGroupName
 

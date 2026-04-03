@@ -6,21 +6,12 @@
             "type": "string",
             "defaultValue": "GET-DEPLOYMENT-ID"
         },
-        "TenantID": {
-            "type": "string",
-            "defaultValue": "GET-TENANT-ID"
-        },
         "AppID": {
             "type": "string",
             "defaultValue": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
         },
         "AppSecret": {
-            "type": "securestring",
-            "defaultValue": "GET-SERVICEPRINCIPAL-SECRET"
-        },
-        "SubscriptionID": {
-            "type": "string",
-            "defaultValue": "GET-SUBSCRIPTION-ID"
+            "type": "securestring"
         },
         "adminUsername": {
             "type": "string",
@@ -48,14 +39,9 @@
             "metadata": {
                 "description": "Source IP to allow RDP. Use * for any or specify IP."
             }
-        },
-        "scriptUrl": {
-            "type": "string",
-            "metadata": {
-                "description": "Public URL to deploy.ps1 hosted in Azure Blob or GitHub raw"
-            }
         }
-    },
+     },
+
     "variables": {
         "location": "[resourceGroup().location]",
         "vmName": "[concat('labvm-', parameters('CloudLabsDeploymentID'))]",
@@ -235,11 +221,7 @@
                 "type": "CustomScriptExtension",
                 "typeHandlerVersion": "1.10",
                 "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": [
-                        "[parameters('scriptUrl')]"
-                    ]
-                },
+                "settings": {},
                 "protectedSettings": {
                     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -Command \"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; New-Item -ItemType Directory -Path 'C:\\temp' -Force | Out-Null; 'Hello from CloudLabs' | Out-File 'C:\\temp\\hello.txt' -Encoding UTF8 -Force; Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/run.ps1' -OutFile 'C:\\temp\\run.ps1'; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers | Out-Null; Install-Module -Name Az -AllowClobber -Force -Scope AllUsers -Repository PSGallery | Out-Null\""
                 }
@@ -272,12 +254,12 @@
             "value": "[resourceGroup().name]"
         },
         "SubscriptionID": {
-            "type": "string",
-            "value": "[subscription().subscriptionId]"
+           "type": "string",
+           "value": "[subscription().subscriptionId]"
         },
         "TenantID": {
             "type": "string",
-            "value": "[parameters('TenantID')]"
+            "value": "[subscription().tenantId]"
         }
     }
 }

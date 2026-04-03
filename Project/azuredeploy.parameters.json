@@ -5,17 +5,11 @@
         "CloudLabsDeploymentID": {
             "value": "GET-DEPLOYMENT-ID"
         },
-        "TenantID": {
-            "value": "GET-TENANT-ID"
-        },
         "AppID": {
             "value": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
         },
         "AppSecret": {
             "value": "GET-SERVICEPRINCIPAL-SECRET"
-        },
-        "SubscriptionID": {
-            "value": "GET-SUBSCRIPTION-ID"
         },
         "adminUsername": {
             "value": "labuser"
@@ -34,9 +28,6 @@
         },
         "allowRDPFromIP": {
             "value": "*"
-        },
-        "scriptUrl": {
-            "value": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/cse.ps1"
         }
     }
 }
