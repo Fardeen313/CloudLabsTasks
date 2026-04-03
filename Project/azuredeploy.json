@@ -241,7 +241,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File cse.ps1 -TenantID \"', parameters('TenantID'), '\" -SubscriptionID \"', parameters('SubscriptionID'), '\" -AppID \"', parameters('AppID'), '\" -AppSecret \"', parameters('AppSecret'), '\"')]"
+                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File cse.ps1"
                 }
             }
         }
