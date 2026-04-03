@@ -137,6 +137,9 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
             "location": "[variables('location')]",
+            "sku": {
+                "name": "Basic"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
