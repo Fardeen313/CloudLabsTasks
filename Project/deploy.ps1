@@ -1,3 +1,4 @@
+$ cat deploy.ps1 
 param(
     [string]$AzureUserName,
     [string]$AzurePassword,
