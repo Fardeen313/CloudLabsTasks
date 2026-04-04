@@ -1,0 +1,280 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "CloudLabsDeploymentID": {
+            "type": "string",
+            "defaultValue": "GET-DEPLOYMENT-ID"
+        },
+        "TenantID": {
+            "type": "string",
+            "defaultValue": "GET-TENANT-ID"
+        },
+        "AppID": {
+            "type": "string",
+            "defaultValue": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
+        },
+        "AppSecret": {
+            "type": "securestring",
+            "defaultValue": "GET-SERVICEPRINCIPAL-SECRET"
+        },
+        "SubscriptionID": {
+            "type": "string",
+            "defaultValue": "GET-SUBSCRIPTION-ID"
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "labuser"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "Password.1!!"
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
+        },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
+        },
+        "subnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
+        },
+        "allowRDPFromIP": {
+            "type": "string",
+            "defaultValue": "*",
+            "metadata": {
+                "description": "Source IP to allow RDP. Use * for any or specify IP."
+            }
+        },
+        "scriptUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Public URL to deploy.ps1 hosted in Azure Blob or GitHub raw"
+            }
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "vmName": "[concat('labvm-', parameters('CloudLabsDeploymentID'))]",
+        "vnetName": "[concat('labVNet-', parameters('CloudLabsDeploymentID'))]",
+        "subnetName": "labSubnet",
+        "nsgName": "[concat('labNSG-', parameters('CloudLabsDeploymentID'))]",
+        "nicName": "[concat('labNIC-', parameters('CloudLabsDeploymentID'))]",
+        "pipName": "[concat('labPIP-', parameters('CloudLabsDeploymentID'))]",
+        "pipDNSLabel": "[concat('labvm-', parameters('CloudLabsDeploymentID'))]",
+        "osDiskName": "[concat('labvm-', parameters('CloudLabsDeploymentID'), '-osdisk')]",
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('nsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "location": "[variables('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "allow-rdp",
+                        "properties": {
+                            "priority": 1000,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "[parameters('allowRDPFromIP')]",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389"
+                        }
+                    },
+                    {
+                        "name": "allow-https",
+                        "properties": {
+                            "priority": 1010,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('pipName')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "[variables('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('pipDNSLabel')]"
+                }
+            }
+        },
+        {
+            "name": "[variables('nicName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                }
+            }
+        },
+        {
+            "name": "[variables('vmName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+            ],
+            "properties": {
+                "osProfile": {
+                    "computerName": "[variables('vmName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": false
+                    }
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[variables('osDiskName')]",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('vmName'), '/CustomScriptExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2021-03-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.10",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[parameters('scriptUrl')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File cse.ps1 -TenantID \"', parameters('TenantID'), '\" -SubscriptionID \"', parameters('SubscriptionID'), '\" -AppID \"', parameters('AppID'), '\" -AppSecret \"', parameters('AppSecret'), '\"')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "VM DNS Name": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).dnsSettings.fqdn]"
+        },
+        "VM Admin Username": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        },
+        "VM Admin Password": {
+            "type": "string",
+            "value": "[parameters('adminPassword')]"
+        },
+        "VM Name": {
+            "type": "string",
+            "value": "[variables('vmName')]"
+        },
+        "VM Private IP": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))).ipConfigurations[0].properties.privateIPAddress]"
+        },
+        "Resource Group": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        },
+        "Subscription ID": {
+            "type": "string",
+            "value": "[subscription().subscriptionId]"
+        },
+        "Tenant ID": {
+            "type": "string",
+            "value": "[parameters('TenantID')]"
+        }
+    }
+}
