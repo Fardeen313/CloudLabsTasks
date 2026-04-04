@@ -6,21 +6,12 @@
             "type": "string",
             "defaultValue": "GET-DEPLOYMENT-ID"
         },
-        "TenantID": {
-            "type": "string",
-            "defaultValue": "GET-TENANT-ID"
-        },
-        "SubscriptionID": {
-            "type": "string",
-            "defaultValue": "GET-SUBSCRIPTION-ID"
-        },
         "AppID": {
             "type": "string",
             "defaultValue": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
         },
         "AppSecret": {
-            "type": "securestring",
-            "defaultValue": "GET-SERVICEPRINCIPAL-SECRET"
+            "type": "securestring"
         },
         "adminUsername": {
             "type": "string",
