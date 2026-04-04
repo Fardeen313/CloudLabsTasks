@@ -3,8 +3,8 @@ Get-Content 'C:\temp\credentials.txt' | ForEach-Object {
     if ($_ -match '^(.+?)=(.+)$') { $creds[$matches[1].Trim()] = $matches[2].Trim() }
 }
 
-$spSecret = ConvertTo-SecureString $creds['AppSecret'] -AsPlainText -Force
-$spCred = New-Object System.Management.Automation.PSCredential($creds['AppID'], $spSecret)
+$spSecure = ConvertTo-SecureString $creds['AppSecret'] -AsPlainText -Force
+$spCred = New-Object System.Management.Automation.PSCredential($creds['AppID'], $spSecure)
 Connect-AzAccount -ServicePrincipal -Credential $spCred -TenantId $creds['TenantID'] | Out-Null
 Set-AzContext -SubscriptionId $creds['SubscriptionID'] | Out-Null
 

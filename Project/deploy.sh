@@ -9,3 +9,4 @@ az deployment group create \
   --verbose
 
 echo "Deployment complete!"
+
