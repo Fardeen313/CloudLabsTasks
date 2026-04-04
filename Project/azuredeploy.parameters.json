@@ -5,12 +5,6 @@
         "CloudLabsDeploymentID": {
             "value": "GET-DEPLOYMENT-ID"
         },
-           "TenantID": {
-            "value": "GET-TENANT-ID"
-        },
-        "SubscriptionID": {
-            "value": "GET-SUBSCRIPTION-ID"
-        },
         "AppID": {
             "value": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
         },
