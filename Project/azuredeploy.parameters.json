@@ -9,7 +9,7 @@
             "value": "GET-SERVICEPRINCIPAL-APPLICATION-ID"
         },
         "AppSecret": {
-            "value": "GET-SERVICEPRINCIPAL-SECRET"
+            "value": "GET-SERVICEPRINCIPAL-SECRET" 
         },
         "adminUsername": {
             "value": "labuser"
