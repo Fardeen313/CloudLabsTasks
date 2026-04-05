@@ -44,7 +44,7 @@
 
     "variables": {
         "location": "[resourceGroup().location]",
-        "vmName": "[concat('labvm-', parameters('CloudLabsDeploymentID'))]",
+        "vmName": "labvm",
         "vnetName": "[concat('labVNet-', parameters('CloudLabsDeploymentID'))]",
         "subnetName": "labSubnet",
         "nsgName": "[concat('labNSG-', parameters('CloudLabsDeploymentID'))]",
