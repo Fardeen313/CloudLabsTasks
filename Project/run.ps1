@@ -39,3 +39,8 @@ New-AzStorageContainer -Name 'labcontainer' -Context $ctx -Permission Off | Out-
 
 Set-AzStorageBlobContent -File 'C:\temp\hello.txt' -Container 'labcontainer' -Blob 'hello.txt' -Context $ctx -Force | Out-Null
 Write-Output "Done: $storageName | labcontainer | hello.txt uploaded"
+
+
+
+
+

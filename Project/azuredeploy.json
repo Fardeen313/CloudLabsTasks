@@ -233,13 +233,9 @@
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).dnsSettings.fqdn]"
         },
-        "serverDomainName": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))).fullyQualifiedDomainName]"
-        },
         "publicIpAddress": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))).ipAddress]"
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).ipAddress]"
         },
         "VMAdminUsername": {
             "type": "string",
