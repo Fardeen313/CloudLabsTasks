@@ -1,46 +1,70 @@
+Update-AzConfig -EnableLoginByWam $false -ErrorAction SilentlyContinue | Out-Null
+
+$LogFile = 'C:\temp\run_log.txt'
+function Write-Log {
+    param([string]$Msg)
+    $line = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $Msg"
+    Write-Output $line
+    Add-Content -Path $LogFile -Value $line -Encoding UTF8
+}
+
+Write-Log "===== run.ps1 started ====="
+
+# ── Read credentials.txt ──────────────────────────────────────────────────────
 $creds = @{}
 Get-Content 'C:\temp\credentials.txt' | ForEach-Object {
     if ($_ -match '^(.+?)=(.+)$') { $creds[$matches[1].Trim()] = $matches[2].Trim() }
 }
 
-$securePassword = ConvertTo-SecureString $creds['AzurePassword'] -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential($creds['AzureUserName'], $securePassword)
-Connect-AzAccount -Credential $credential -TenantId $creds['TenantID'] | Out-Null
+$TenantID  = $creds['TenantID']
+$AppID     = $creds['AppID']
+$AppSecret = $creds['AppSecret']
 
-$SubscriptionID = (Get-AzContext).Subscription.Id
+Write-Log "TenantID : $TenantID"
+Write-Log "AppID    : $AppID"
 
-$sp = New-AzADApplication -DisplayName "LabSPN-$(Get-Random -Minimum 1000 -Maximum 9999)"
-New-AzADServicePrincipal -ApplicationId $sp.AppId | Out-Null
-$spSecret = New-AzADAppCredential -ApplicationId $sp.AppId
-$NewSPNAppID = $sp.AppId
-$NewSPNSecret = $spSecret.SecretText
+if (-not $TenantID -or -not $AppID -or -not $AppSecret) {
+    Write-Log "ERROR: Missing values in credentials.txt"
+    Get-Content 'C:\temp\credentials.txt' | ForEach-Object { Write-Log "  >> $_" }
+    exit 1
+}
 
+# ── Login as SPN ──────────────────────────────────────────────────────────────
+Write-Log "Logging in as SPN..."
+try {
+    $spSecure = ConvertTo-SecureString $AppSecret -AsPlainText -Force
+    $spCred   = New-Object System.Management.Automation.PSCredential($AppID, $spSecure)
+    Connect-AzAccount -ServicePrincipal -Credential $spCred -TenantId $TenantID -ErrorAction Stop | Out-Null
+    $SubscriptionID = (Get-AzContext).Subscription.Id
+    Write-Log "SPN login OK. SubscriptionID: $SubscriptionID"
+} catch {
+    Write-Log "ERROR SPN login failed: $_"
+    exit 1
+}
+
+# ── Get RG and location from IMDS ─────────────────────────────────────────────
+Write-Log "Fetching IMDS..."
 $metadata = Invoke-RestMethod -Uri 'http://169.254.169.254/metadata/instance?api-version=2021-02-01' -Headers @{Metadata='true'}
-$rg = $metadata.compute.resourceGroupName
-
-New-AzRoleAssignment -ApplicationId $NewSPNAppID -RoleDefinitionName "Owner" -ResourceGroupName $rg | Out-Null
-
-Add-Content 'C:\temp\credentials.txt' -Value "AppID=$NewSPNAppID"
-Add-Content 'C:\temp\credentials.txt' -Value "AppSecret=$NewSPNSecret"
-
-Start-Sleep -Seconds 30
-
-$spSecure = ConvertTo-SecureString $NewSPNSecret -AsPlainText -Force
-$spCred = New-Object System.Management.Automation.PSCredential($NewSPNAppID, $spSecure)
-Connect-AzAccount -ServicePrincipal -Credential $spCred -TenantId $creds['TenantID'] | Out-Null
-Set-AzContext -SubscriptionId $SubscriptionID | Out-Null
-
+$rg       = $metadata.compute.resourceGroupName
 $location = $metadata.compute.location
+Write-Log "RG: $rg | Location: $location"
+
+# ── Create Storage Account ────────────────────────────────────────────────────
 $storageName = "labstorage" + (Get-Random -Minimum 10000 -Maximum 99999)
-New-AzStorageAccount -ResourceGroupName $rg -Name $storageName -Location $location -SkuName Standard_LRS -Kind StorageV2 | Out-Null
+Write-Log "Creating storage account: $storageName"
+New-AzStorageAccount -ResourceGroupName $rg -Name $storageName -Location $location -SkuName Standard_LRS -Kind StorageV2 -ErrorAction Stop | Out-Null
+Write-Log "Storage account created"
 
+# ── Create Container ──────────────────────────────────────────────────────────
 $ctx = (Get-AzStorageAccount -ResourceGroupName $rg -Name $storageName).Context
-New-AzStorageContainer -Name 'labcontainer' -Context $ctx -Permission Off | Out-Null
+New-AzStorageContainer -Name 'labcontainer' -Context $ctx -Permission Off -ErrorAction Stop | Out-Null
+Write-Log "Container created"
 
-Set-AzStorageBlobContent -File 'C:\temp\hello.txt' -Container 'labcontainer' -Blob 'hello.txt' -Context $ctx -Force | Out-Null
-Write-Output "Done: $storageName | labcontainer | hello.txt uploaded"
+# ── Upload hello.txt ──────────────────────────────────────────────────────────
+if (-not (Test-Path 'C:\temp\hello.txt')) {
+    Set-Content 'C:\temp\hello.txt' -Value "Hello from CloudLabs!" -Encoding UTF8
+}
+Set-AzStorageBlobContent -File 'C:\temp\hello.txt' -Container 'labcontainer' -Blob 'hello.txt' -Context $ctx -Force -ErrorAction Stop | Out-Null
+Write-Log "hello.txt uploaded"
 
-
-
-
-
+Write-Log "===== DONE: $storageName | labcontainer | hello.txt ====="

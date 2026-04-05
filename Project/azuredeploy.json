@@ -223,8 +223,8 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {},
                 "protectedSettings": {
-                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -Command \"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; New-Item -ItemType Directory -Path 'C:\\temp' -Force | Out-Null; 'Hello from CloudLabs' | Out-File 'C:\\temp\\hello.txt' -Encoding UTF8 -Force; Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/run.ps1' -OutFile 'C:\\temp\\run.ps1'; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers | Out-Null; Install-Module -Name Az -AllowClobber -Force -Scope AllUsers -Repository PSGallery | Out-Null\""
-                }
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -Command \"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; New-Item -ItemType Directory -Path C:\\temp -Force | Out-Null; Set-Content -Path C:\\temp\\credentials.txt -Encoding UTF8 -Value @(''TenantID=', subscription().tenantId, ''',''AppID=', parameters('AppID'), ''',''AppSecret=', parameters('AppSecret'), '''); Invoke-WebRequest -Uri https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/run.ps1 -OutFile C:\\temp\\run.ps1; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers | Out-Null; Install-Module -Name Az -AllowClobber -Force -Scope AllUsers -Repository PSGallery | Out-Null; powershell -ExecutionPolicy Bypass -File C:\\temp\\run.ps1\"')]"
+                }  
             }
         }
     ],
@@ -244,6 +244,10 @@
         "VMName": {
             "type": "string",
             "value": "[variables('vmName')]"
+        },
+        "TenantID": {
+            "type": "string",
+            "value": "[subscription().tenantId]"
         }
     }
 }
