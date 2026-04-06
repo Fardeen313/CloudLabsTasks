@@ -7,5 +7,5 @@ REGION="us-east-1"
 aws cloudformation deploy \
   --stack-name $STACK_NAME \
   --template-file $TEMPLATE_FILE \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --region $REGION
+  --region $REGION \
+  --capabilities CAPABILITY_NAMED_IAM 
