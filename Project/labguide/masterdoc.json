@@ -1,0 +1,44 @@
+[
+{
+  "Name": "Windows VM Automation Lab",
+  "Language": "English",
+  "Files": [
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/01-overview.md",
+      "Order": 1
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/02-architecture.md",
+      "Order": 2
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/03-prerequisites.md",
+      "Order": 3
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/04-arm-template.md",
+      "Order": 4
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/05-method1-cse.md",
+      "Order": 5
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/06-method2-deploymentscript.md",
+      "Order": 6
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/07-cloudlabs-vm-config.md",
+      "Order": 7
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/08-verification.md",
+      "Order": 8
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/Project/labguide/09-troubleshooting.md",
+      "Order": 9
+    }
+  ]
+}
+]

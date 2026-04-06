@@ -1,0 +1,98 @@
+<svg width="680" height="680" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg-outer { fill: #0a1628; }
+      .bg-inner { fill: #0d1f3c; }
+      .ring-1 { fill: none; stroke: #0078d4; stroke-width: 1.5; opacity: 0.3; }
+      .ring-2 { fill: none; stroke: #50e6ff; stroke-width: 1; opacity: 0.2; }
+      .hex-border { fill: none; stroke: #0078d4; stroke-width: 0.8; opacity: 0.4; }
+      .cloud-main { fill: #0078d4; }
+      .cloud-light { fill: #50e6ff; }
+      .vm-box { fill: #1a3a5c; stroke: #0078d4; stroke-width: 1.5; }
+      .vm-screen { fill: #0d2137; }
+      .bolt { fill: #50e6ff; }
+      .label-main { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 38px; font-weight: 700; fill: #ffffff; }
+      .label-sub { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; font-weight: 400; fill: #50e6ff; letter-spacing: 4px; }
+      .label-tag { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; font-weight: 400; fill: #7ab8d9; }
+      .orbit-dot { fill: #50e6ff; }
+      .orbit-line { fill: none; stroke: #50e6ff; stroke-width: 0.8; opacity: 0.25; stroke-dasharray: 4 4; }
+      .glow-blue { fill: #0078d4; opacity: 0.15; }
+      .particle { fill: #50e6ff; opacity: 0.6; }
+      .line-accent { stroke: #50e6ff; stroke-width: 1; opacity: 0.4; fill: none; }
+      .box-accent { fill: none; stroke: #0078d4; stroke-width: 1; opacity: 0.5; }
+    </style>
+  </defs>
+
+  <circle cx="340" cy="340" r="320" class="bg-outer"/>
+  <circle cx="340" cy="340" r="290" class="bg-inner"/>
+  <circle cx="340" cy="340" r="270" class="ring-1"/>
+  <circle cx="340" cy="340" r="240" class="ring-2"/>
+  <circle cx="340" cy="340" r="210" class="ring-1"/>
+
+  <ellipse cx="340" cy="340" rx="220" ry="70" transform="rotate(-30 340 340)" class="orbit-line"/>
+  <ellipse cx="340" cy="340" rx="220" ry="70" transform="rotate(30 340 340)" class="orbit-line"/>
+
+  <g opacity="0.18">
+    <polygon points="340,120 372,138 372,174 340,192 308,174 308,138" class="hex-border"/>
+    <polygon points="404,156 436,174 436,210 404,228 372,210 372,174" class="hex-border"/>
+    <polygon points="276,156 308,174 308,210 276,228 244,210 244,174" class="hex-border"/>
+    <polygon points="340,408 372,426 372,462 340,480 308,462 308,426" class="hex-border"/>
+    <polygon points="404,444 436,462 436,498 404,516 372,498 372,462" class="hex-border"/>
+    <polygon points="276,444 308,462 308,498 276,516 244,498 244,462" class="hex-border"/>
+  </g>
+
+  <circle cx="340" cy="300" r="120" class="glow-blue"/>
+
+  <g transform="translate(340, 260)">
+    <ellipse cx="0" cy="20" rx="90" ry="50" class="cloud-main" opacity="0.9"/>
+    <ellipse cx="-40" cy="0" rx="55" ry="42" class="cloud-main" opacity="0.9"/>
+    <ellipse cx="45" cy="-5" rx="62" ry="48" class="cloud-main" opacity="0.9"/>
+    <ellipse cx="10" cy="-30" rx="52" ry="42" class="cloud-main" opacity="0.9"/>
+    <ellipse cx="30" cy="-35" rx="30" ry="22" class="cloud-light" opacity="0.25"/>
+  </g>
+
+  <rect x="292" y="242" width="96" height="62" rx="5" class="vm-box"/>
+  <rect x="296" y="248" width="88" height="44" rx="3" class="vm-screen"/>
+  <rect x="300" y="254" width="50" height="3" rx="1" fill="#0078d4" opacity="0.7"/>
+  <rect x="300" y="261" width="35" height="3" rx="1" fill="#50e6ff" opacity="0.5"/>
+  <rect x="300" y="268" width="42" height="3" rx="1" fill="#0078d4" opacity="0.5"/>
+  <rect x="300" y="275" width="28" height="3" rx="1" fill="#50e6ff" opacity="0.4"/>
+  <circle cx="357" cy="255" r="3" fill="#28c840"/>
+  <circle cx="366" cy="255" r="3" fill="#febc2e"/>
+  <circle cx="375" cy="255" r="3" fill="#ff5f57"/>
+  <rect x="296" y="295" width="88" height="6" rx="2" fill="#0078d4" opacity="0.4"/>
+
+  <g transform="translate(408, 228)">
+    <polygon points="12,0 4,14 10,14 0,28 14,10 8,10" class="bolt"/>
+  </g>
+
+  <circle cx="130" cy="310" r="6" class="orbit-dot" opacity="0.8"/>
+  <circle cx="205" cy="175" r="4" class="orbit-dot" opacity="0.6"/>
+  <circle cx="480" cy="195" r="5" class="orbit-dot" opacity="0.7"/>
+  <circle cx="550" cy="330" r="4" class="orbit-dot" opacity="0.5"/>
+  <circle cx="455" cy="460" r="6" class="orbit-dot" opacity="0.6"/>
+  <circle cx="200" cy="455" r="4" class="orbit-dot" opacity="0.5"/>
+
+  <circle cx="160" cy="240" r="2" class="particle"/>
+  <circle cx="500" cy="250" r="2" class="particle"/>
+  <circle cx="170" cy="390" r="2" class="particle"/>
+  <circle cx="510" cy="400" r="2" class="particle"/>
+  <circle cx="300" cy="480" r="2" class="particle"/>
+  <circle cx="390" cy="145" r="2" class="particle"/>
+
+  <line x1="80" y1="370" x2="260" y2="370" class="line-accent"/>
+  <line x1="420" y1="370" x2="600" y2="370" class="line-accent"/>
+  <circle cx="80" cy="370" r="2.5" fill="#50e6ff" opacity="0.5"/>
+  <circle cx="260" cy="370" r="2.5" fill="#50e6ff" opacity="0.5"/>
+  <circle cx="420" cy="370" r="2.5" fill="#50e6ff" opacity="0.5"/>
+  <circle cx="600" cy="370" r="2.5" fill="#50e6ff" opacity="0.5"/>
+
+  <text x="340" y="420" text-anchor="middle" class="label-main">CloudLabs</text>
+  <text x="340" y="452" text-anchor="middle" class="label-sub">AUTOMATION LAB</text>
+  <text x="340" y="488" text-anchor="middle" class="label-tag">Windows VM · Azure · PowerShell · ARM</text>
+
+  <rect x="90" y="90" width="18" height="18" rx="2" class="box-accent"/>
+  <rect x="572" y="90" width="18" height="18" rx="2" class="box-accent"/>
+  <rect x="90" y="572" width="18" height="18" rx="2" class="box-accent"/>
+  <rect x="572" y="572" width="18" height="18" rx="2" class="box-accent"/>
+</svg>
