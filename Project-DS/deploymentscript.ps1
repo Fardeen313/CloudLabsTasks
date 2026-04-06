@@ -1,47 +1,38 @@
 param(
-    [string]$SubscriptionId,
-    [string]$rg,
-    [string]$deploymentId,
-    [string]$AppId,
-    [string]$AppSecret,
-    [string]$TenantId
+    [string]$AzureUserName,
+    [string]$AzurePassword,
+    [string]$AzureSubscriptionID,
+    [string]$AzureTenantID,
+    [string]$ApplicationID,
+    [string]$SecretKey,
+    [string]$DeploymentID
 )
 
 Write-Host "Starting CloudLabs deployment script..."
+Write-Host "TenantID      : $AzureTenantID"
+Write-Host "ApplicationID : $ApplicationID"
+Write-Host "SubscriptionID: $AzureSubscriptionID"
+Write-Host "DeploymentID  : $DeploymentID"
 
-Set-AzContext -Subscription $SubscriptionId
-
+# Find VM and RG dynamically — no hardcoded names
 $vmName = "labvm"
+$rg = (Get-AzVM | Where-Object { $_.Name -eq $vmName }).ResourceGroupName
 
-Write-Host "VM Name  : $vmName"
-Write-Host "RG       : $rg"
-Write-Host "TenantId : $TenantId"
-Write-Host "AppId    : $AppId"
+Write-Host "VM Name        : $vmName"
+Write-Host "Resource Group : $rg"
 
-# Build credential lines as a simple array — no nested here-strings
-$line1 = "TenantID=$TenantId"
-$line2 = "AppID=$AppId"
-$line3 = "AppSecret=$AppSecret"
+# Pre-resolve ALL values outside here-string — prevents parsing errors
+$credLine1 = "TenantID=" + $AzureTenantID
+$credLine2 = "AppID=" + $ApplicationID
+$credLine3 = "AppSecret=" + $SecretKey
 
-$vmScript = @"
-New-Item -ItemType Directory -Path C:\temp -Force | Out-Null
-
-Set-Content -Path C:\temp\credentials.txt -Encoding UTF8 -Value @(
-    '$line1',
-    '$line2',
-    '$line3'
-)
-
-Write-Host "credentials.txt written"
-
-if (-not (Test-Path 'C:\temp\run.ps1')) {
-    Write-Host "ERROR: run.ps1 not found"
-    exit 1
-}
-
-Write-Host "Triggering run.ps1..."
-powershell -ExecutionPolicy Bypass -File C:\temp\run.ps1
-"@
+# Build vmScript using simple string concatenation — NO nested here-strings
+$vmScript  = "New-Item -ItemType Directory -Path C:\temp -Force | Out-Null`n"
+$vmScript += "Set-Content -Path C:\temp\credentials.txt -Encoding UTF8 -Value @('" + $credLine1 + "','" + $credLine2 + "','" + $credLine3 + "')`n"
+$vmScript += "Write-Host 'credentials.txt written'`n"
+$vmScript += "if (-not (Test-Path 'C:\temp\run.ps1')) { Write-Host 'ERROR: run.ps1 not found'; exit 1 }`n"
+$vmScript += "Write-Host 'Triggering run.ps1...'`n"
+$vmScript += "powershell -ExecutionPolicy Bypass -File C:\temp\run.ps1`n"
 
 Invoke-AzVMRunCommand `
     -ResourceGroupName $rg `
