@@ -1,6 +1,6 @@
 param()
 
-$resourceGroupName = "ProjectAutomationDeployment-$(CloudLabsDeploymentID)"
+$resourceGroupName = "ProjectAutomationDeployment-2170319"
 $vmName = "labvm"
 
 $script = @'
@@ -12,14 +12,18 @@ if (!(Test-Path "C:\temp")) {
 
 $content = @"
 TenantID=hardcodedvalue
-SubscriptionID=$(SubscriptionId)
-AppID=$(AppID)
-AppSecret=$(AppSecret)
+SubscriptionID=subId
+AppID=AppId
+AppSecret=secret
 "@
 
 Set-Content -Path $filePath -Value $content -Force
 
+Write-Output "credentials.txt updated successfully"
+
+Write-Output "Starting run.ps1..."
 powershell.exe -ExecutionPolicy Bypass -File "C:\temp\run.ps1"
+Write-Output "run.ps1 execution completed"
 '@
 
 Invoke-AzVMRunCommand `
