@@ -1,35 +1,18 @@
-param()
-
-$resourceGroupName = "ProjectAutomationDeployment-2170319"
+$resourceGroupName = "ProjectAutomationDeployment-2172106"
 $vmName = "labvm"
 
 $script = @'
-$filePath = "C:\temp\credentials.txt"
+New-Item -ItemType Directory -Path "C:\temp" -Force | Out-Null
 
-if (!(Test-Path "C:\temp")) {
-    New-Item -ItemType Directory -Path "C:\temp"
-}
+$creds = "TenantID=`nSubscriptionID=`nAppID=`nAppSecret="
 
-$content = @"
-TenantID=hardcodedvalue
-SubscriptionID=subId
-AppID=AppId
-AppSecret=secret
-"@
+Set-Content -Path "C:\temp\credentials.txt" -Value $creds -Force
 
-Set-Content -Path $filePath -Value $content -Force
-
-Write-Output "credentials.txt updated successfully"
-
-Write-Output "Starting run.ps1..."
-powershell.exe -ExecutionPolicy Bypass -File "C:\temp\run.ps1"
-Write-Output "run.ps1 execution completed"
+& "C:\temp\run.ps1"
 '@
 
 Invoke-AzVMRunCommand `
-    -ResourceGroupName $resourceGroupName `
-    -VMName $vmName `
-    -CommandId 'RunPowerShellScript' `
-    -ScriptString $script
-
-Write-Output "Command executed on VM"
+  -ResourceGroupName $resourceGroupName `
+  -VMName $vmName `
+  -CommandId 'RunPowerShellScript' `
+  -ScriptString $script
