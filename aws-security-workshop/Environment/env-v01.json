@@ -4,13 +4,11 @@
     "Parameters": {
         "AccessKey": {
             "Description": "Access key to authenticate to AWS account",
-            "Type": "String",
-            "Default": "GET-ACCESS-KEY"
+            "Type": "String"
         },
         "SecretKey": {
             "Description": "Secret key to authenticate to AWS account",
-            "Type": "String",
-            "Default": "GET-SECRET-KEY"
+            "Type": "String"  
         },
         "CheckAcknowledgement": {
             "Type": "String",
@@ -41,8 +39,7 @@
             "Default": "Labuser"
         },
         "VMPassword": {
-            "Type": "String",
-            "Default": "LabPassword123"
+            "Type": "String"
         }
     },
     "Resources": {
@@ -236,24 +233,30 @@
                 ]
             }
         },
-        "clgSg": {
+       "clgSg": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
-                "GroupDescription": "Security group for Fargate ECS container",
+                "GroupDescription": "Security group for Fargate ECS container - fully open",
                 "VpcId": {
                     "Ref": "clgVpc"
                 },
                 "SecurityGroupIngress": [
                     {
-                        "FromPort": 443,
-                        "ToPort": 443,
-                        "IpProtocol": "tcp",
+                        "IpProtocol": "-1",
                         "CidrIp": "0.0.0.0/0"
                     },
                     {
-                        "FromPort": 443,
-                        "ToPort": 443,
-                        "IpProtocol": "tcp",
+                        "IpProtocol": "-1",
+                        "CidrIpv6": "::/0"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "-1",
                         "CidrIpv6": "::/0"
                     }
                 ],
@@ -291,7 +294,7 @@
                 },
                 "UserData": {
                     "Fn::Base64": {
-                        "Fn::Sub": "<powershell>\nnet user Administrator \"${VMPassword}\"\nRename-LocalUser -Name \"Administrator\" -NewName \"${VMUserName}\"\n$Password = ConvertTo-SecureString \"${VMPassword}\" -AsPlainText -Force\n$UserAccount = Get-LocalUser -Name \"${VMUserName}\"\n$UserAccount | Set-LocalUser -Password $Password\n\n# Install Chocolatey\nSet-ExecutionPolicy Bypass -Scope Process -Force\n[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072\nInvoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))\n\n# Install tools via Chocolatey\nchoco install vscode -y\nchoco install brave -y\nchoco install git -y\n\n# Install Power Automate Desktop\n$powerAutomateUrl = 'https://go.microsoft.com/fwlink/?linkid=2102613'\n$powerAutomateInstaller = \"$env:TEMP\\PowerAutomateSetup.exe\"\nInvoke-WebRequest -Uri $powerAutomateUrl -OutFile $powerAutomateInstaller\nStart-Process -FilePath $powerAutomateInstaller -ArgumentList '-Silent' -Wait\n\n# Install Power BI Desktop\n$powerBIUrl = 'https://download.microsoft.com/download/8/8/0/880BCA75-79DD-466A-927D-1ABF1F5454B0/PBIDesktopSetup_x64.exe'\n$powerBIInstaller = \"$env:TEMP\\PBIDesktopSetup_x64.exe\"\nInvoke-WebRequest -Uri $powerBIUrl -OutFile $powerBIInstaller\nStart-Process -FilePath $powerBIInstaller -ArgumentList '-quiet', '-norestart' -Wait\n\n# Install n8n (requires Node.js first)\nchoco install nodejs-lts -y\nRefreshEnv\nnpm install -g n8n\n\n</powershell>\n"
+                        "Fn::Sub": "<powershell> net user Administrator \"${VMPassword}\"; Rename-LocalUser -Name \"Administrator\" -NewName \"${VMUserName}\"; $Password = ConvertTo-SecureString \"${VMPassword}\" -AsPlainText -Force; $UserAccount = Get-LocalUser -Name \"${VMUserName}\"; $UserAccount | Set-LocalUser -Password $Password; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); if (Test-Path \"$env:ChocolateyInstall\\helpers\\chocolateyProfile.psm1\") { Import-Module \"$env:ChocolateyInstall\\helpers\\chocolateyProfile.psm1\" }; choco install vscode -y --ignore-detected-reboot; choco install brave -y --ignore-detected-reboot; choco install git -y --ignore-detected-reboot; choco install nodejs-lts -y --ignore-detected-reboot; $env:Path += \";C:\\Program Files\\nodejs\"; Start-Sleep -Seconds 20; if (Get-Command npm -ErrorAction SilentlyContinue) { try { npm install -g n8n } catch { Start-Sleep -Seconds 20; npm install -g n8n } }; $powerAutomateUrl='https://go.microsoft.com/fwlink/?linkid=2102613'; $powerAutomateInstaller=\"$env:TEMP\\PowerAutomateSetup.exe\"; Invoke-WebRequest -Uri $powerAutomateUrl -OutFile $powerAutomateInstaller; Start-Process -FilePath $powerAutomateInstaller -ArgumentList '-Silent' -Wait; $powerBIUrl='https://download.microsoft.com/download/8/8/0/880BCA75-79DD-466A-927D-1ABF1F5454B0/PBIDesktopSetup_x64.exe'; $powerBIInstaller=\"$env:TEMP\\PBIDesktopSetup_x64.exe\"; Invoke-WebRequest -Uri $powerBIUrl -OutFile $powerBIInstaller; Start-Process -FilePath $powerBIInstaller -ArgumentList '-quiet','-norestart' -Wait; Start-Sleep -Seconds 30; </powershell>"
                     }
                 },
                 "Tags": [

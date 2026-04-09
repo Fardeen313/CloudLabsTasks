@@ -1,0 +1,28 @@
+{
+  "parameters": {
+    "AccessKey": {
+      "value": "GET-ACCESS-KEY"
+    },
+    "SecretKey": {
+      "value": "GET-SECRET-KEY"
+    },
+    "CheckAcknowledgement": {
+      "value": "TRUE"
+    },
+    "vpcCidr": {
+      "value": "10.10.0.0/16"
+    },
+    "subnetCidr": {
+      "value": "10.10.0.0/24"
+    },
+    "clgclusterSubnetCidr": {
+      "value": "10.10.1.0/24"
+    },
+    "VMUserName": {
+      "value": "Labuser"
+    },
+    "VMPassword": {
+      "value": "GEN-PASSWORD"
+    }
+  }
+}
