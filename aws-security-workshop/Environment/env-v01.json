@@ -220,9 +220,7 @@
                         "IpProtocol": "tcp",
                         "FromPort": "0",
                         "ToPort": "65535",
-                        "CidrIp": {
-                            "Ref": "clgclusterSubnetCidr"
-                        }
+                        "CidrIp": "0.0.0.0/0"
                     }
                 ],
                 "Tags": [
