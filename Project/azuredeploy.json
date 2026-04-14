@@ -21,6 +21,10 @@
             "type": "securestring",
             "defaultValue": "Password.1!!"
         },
+        "vmName": {
+            "type": "string",
+            "defaultValue": "labvm"
+        },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
@@ -44,7 +48,6 @@
 
     "variables": {
         "location": "[resourceGroup().location]",
-        "vmName": "labvm",
         "vnetName": "[concat('labVNet-', parameters('CloudLabsDeploymentID'))]",
         "subnetName": "labSubnet",
         "nsgName": "[concat('labNSG-', parameters('CloudLabsDeploymentID'))]",
@@ -73,19 +76,6 @@
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "3389"
-                        }
-                    },
-                    {
-                        "name": "allow-https",
-                        "properties": {
-                            "priority": 1010,
-                            "protocol": "TCP",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "443"
                         }
                     }
                 ]
@@ -124,10 +114,10 @@
             "apiVersion": "2020-11-01",
             "location": "[variables('location')]",
             "sku": {
-                "name": "Basic"
+                "name": "Standard"
             },
             "properties": {
-                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAllocationMethod": "Static",
                 "dnsSettings": {
                     "domainNameLabel": "[variables('pipDNSLabel')]"
                 }
@@ -164,7 +154,7 @@
             }
         },
         {
-            "name": "[variables('vmName')]",
+            "name": "[parameters('vmName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2021-03-01",
             "location": "[variables('location')]",
@@ -173,7 +163,7 @@
             ],
             "properties": {
                 "osProfile": {
-                    "computerName": "[variables('vmName')]",
+                    "computerName": "[parameters('vmName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "windowsConfiguration": {
@@ -195,7 +185,7 @@
                         "name": "[variables('osDiskName')]",
                         "createOption": "FromImage",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "Standard_LRS"
                         }
                     }
                 },
@@ -209,12 +199,12 @@
             }
         },
         {
-            "name": "[concat(variables('vmName'), '/CustomScriptExtension')]",
+            "name": "[concat(parameters('vmName'), '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2021-03-01",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]"
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Compute",
@@ -243,7 +233,7 @@
         },
         "VMName": {
             "type": "string",
-            "value": "[variables('vmName')]"
+            "value": "[parameters('vmName')]"
         },
         "TenantID": {
             "type": "string",
