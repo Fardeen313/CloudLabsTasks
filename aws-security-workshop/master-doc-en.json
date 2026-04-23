@@ -28,7 +28,7 @@
   },
   {
     "Name": "AWS Security Workshop",
-    "Language": "Spanish",
+    "Language": "Spanish-ES",
     "BaseURL": "https://github.com/Fardeen313/CloudLabsTasks/tree/main/aws-security-workshop/Instructions/es",
     "Files": [
       {
