@@ -2,13 +2,16 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "CloudLabs Windows EC2 Environment with ECS Fargate RDP over HTTPS support",
     "Parameters": {
+        "CloudLabsDeploymentID": {
+            "Type": "String"
+        },
         "AccessKey": {
             "Description": "Access key to authenticate to AWS account",
             "Type": "String"
         },
         "SecretKey": {
             "Description": "Secret key to authenticate to AWS account",
-            "Type": "String"  
+            "Type": "String"
         },
         "CheckAcknowledgement": {
             "Type": "String",
@@ -67,7 +70,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "TaskExecutionRole"
+                        "Value": {
+                            "Fn::Sub": "TaskExecutionRole-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -83,7 +88,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "clgVpc"
+                        "Value": {
+                            "Fn::Sub": "clgVpc-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -94,7 +101,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "clgInternetGateway"
+                        "Value": {
+                            "Fn::Sub": "clgInternetGateway-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -126,7 +135,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "vmSubnet"
+                        "Value": {
+                            "Fn::Sub": "vmSubnet-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -140,7 +151,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "RouteTable"
+                        "Value": {
+                            "Fn::Sub": "RouteTable-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -199,12 +212,14 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "vmSecurityGroup"
+                        "Value": {
+                            "Fn::Sub": "vmSecurityGroup-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
         },
-       "clgSg": {
+        "clgSg": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
                 "GroupDescription": "Security group for Fargate ECS container - fully open",
@@ -234,7 +249,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "clgSg"
+                        "Value": {
+                            "Fn::Sub": "clgSg-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
@@ -271,13 +288,21 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "labvm"
+                        "Value": {
+                            "Fn::Sub": "lab-vm-${CloudLabsDeploymentID}"
+                        }
                     }
                 ]
             }
         }
     },
     "Outputs": {
+        "CloudLabsDeploymentID": {
+            "Description": "CloudLabs Deployment ID",
+            "Value": {
+                "Ref": "CloudLabsDeploymentID"
+            }
+        },
         "AWSAccountID": {
             "Description": "AWS Account ID",
             "Value": {
