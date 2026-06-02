@@ -308,18 +308,6 @@
                 "Ref": "vmSecurityGroup"
             }
         },
-        "clusterSubnetId": {
-            "Description": "The ID of the Cluster Subnet",
-            "Value": {
-                "Ref": "clgClusterSubnet"
-            }
-        },
-        "clusterSecurityGroupId": {
-            "Description": "The SG ID of the Cluster",
-            "Value": {
-                "Ref": "clgSg"
-            }
-        },
         "TaskExecutionRole": {
             "Description": "The ARN of the Role utilised by ECS Task Definition",
             "Value": {
