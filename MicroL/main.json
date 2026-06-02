@@ -308,6 +308,12 @@
                 "Ref": "vmSecurityGroup"
             }
         },
+        "clusterSecurityGroupId": {
+            "Description": "The SG ID of the Cluster",
+            "Value": {
+                "Ref": "clgSg"
+            }
+        },
         "TaskExecutionRole": {
             "Description": "The ARN of the Role utilised by ECS Task Definition",
             "Value": {
