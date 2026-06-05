@@ -1,7 +1,7 @@
 [
   {
     "Name": "Lab – Shell Scripting Advanced",
-    "Language": "Spanish",
+    "Language": "English",
     "Files": [
       { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/GettingStarted.md", "Order": 1 },
       { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-1.md", "Order": 2 },
