@@ -128,7 +128,7 @@ You can verify this using:
 sudo systemctl is-active httpd
 ```
 
-<validation step="SERVICE-TASK1" />
+<validation step="dfb21bdb-d7ab-4a73-88b8-9123867891d8" />
 
 ---
 
@@ -270,7 +270,7 @@ Expected output:
 active
 ```
 
-<validation step="SERVICE-TASK2" />
+<validation step="0d980599-73b0-41a3-b768-87c5c004307d" />
 
 ---
 
