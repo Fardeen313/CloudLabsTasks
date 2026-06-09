@@ -1,25 +1,50 @@
-# Introduction to Shell Scripting Advanced.
+# Getting Started
 
-Before starting the hands-on lab, kindly note that the lab duration will be shown at the top right corner of your lab environment page once the lab is launched by clicking the **Launch Lab** button. The time will be ticking automatically, so it's important to keep an eye on it while performing your lab tasks.
+## Access Information
 
-![alt text](image-4.png)
+You will perform all lab tasks on a Linux virtual machine provisioned for this environment.
 
-Follow the steps below to get started with the lab.
+### SSH Connection
 
-1. Sign in to the AWS Management Console by copying the **Sign-in link, Username, and Password** provided below.
+Use the following command to connect to the virtual machine:
 
-    * **Sign-in Link**: **<inject key="SignInUrl" enableCopy="true" />**
+```bash
+ssh <inject key="VMUserName" enableCopy="true"/>@<inject key="VMPublicDNSName" enableCopy="true"/>
+```
 
-    * **IAM Username**: **<inject key="UserName" enableCopy="true" />**
+### Username
 
-    * **Password**: **<inject key="Password" enableCopy="true" />**
+```text
+<inject key="VMUserName" enableCopy="true"/>
+```
 
-    ![alt text](image.png)
+### Password
 
-    Alternatively, you can also find these values on the **CloudLabs** Environment tab.
+```text
+<inject key="VMPassword" enableCopy="true"/>
+```
 
-    ![alt text](image-2.png)
+## Note
 
-2. After signing in to the AWS Management Console, choose the region **US-EAST-1 (N. Virginia)** from the drop-down menu in the top right hand corner.
+If you prefer not to use a browser-based terminal, you may connect to the virtual machine directly from your local computer using any SSH client, including:
 
-    ![alt text](image-3.png)
+* OpenSSH (Linux/macOS)
+* Windows Terminal or PowerShell
+* PuTTY
+* MobaXterm
+* Termius
+
+Use the SSH command and credentials provided above to establish the connection.
+
+> **Important:** Ensure that your local network allows outbound SSH connections on port 22 before attempting to connect from your local machine.
+
+## Verification
+
+After connecting successfully, verify access by running:
+
+```bash
+whoami
+hostname
+```
+
+The commands should display your current username and the hostname of the lab virtual machine.
