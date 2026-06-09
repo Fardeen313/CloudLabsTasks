@@ -39,34 +39,30 @@ do {
         $commands = @(
 
             'SCRIPT="/home/Labuser/scripts/system_report.sh"',
-            'LOG_FILE="/tmp/system_report.log"',
 
             'if [ ! -f "$SCRIPT" ]; then',
             '    echo "Validation Failed: system_report.sh was not found."',
             '    exit 1',
             'fi',
 
-            'if [ ! -x "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh is not executable."',
+            'CRON_ENTRIES=$(crontab -u Labuser -l 2>/dev/null)',
+
+            'if [ -z "$CRON_ENTRIES" ]; then',
+            '    echo "Validation Failed: No cron jobs found."',
             '    exit 1',
             'fi',
 
-            '# Execute script',
-            'bash "$SCRIPT" >/dev/null 2>&1',
-
-            'sleep 2',
-
-            'if [ ! -f "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log was not created."',
+            'if ! echo "$CRON_ENTRIES" | grep -q "system_report.sh"; then',
+            '    echo "Validation Failed: Cron job for system_report.sh was not found."',
             '    exit 1',
             'fi',
 
-            'if [ ! -s "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log is empty."',
+            'if ! echo "$CRON_ENTRIES" | grep -qE "^\*[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*"; then',
+            '    echo "Validation Failed: Cron schedule is not configured for every 1 minute."',
             '    exit 1',
             'fi',
 
-            'echo "Validation Passed: system_report.sh executed successfully and generated report output."',
+            'echo "Validation Passed: Cron job is configured to execute system_report.sh every 1 minutes."',
             'exit 0'
 
         )
@@ -98,7 +94,7 @@ do {
  
             $message = @{
                 Status  = "Succeeded"
-                Message = "TASK-1 validation passed."
+                Message = "TASK-2 validation passed."
             } | ConvertTo-Json
  
         }
@@ -106,7 +102,7 @@ do {
  
             $message = @{
                 Status  = "Failed"
-                Message = "TASK-1 validation failed."
+                Message = "TASK-2 validation failed."
             } | ConvertTo-Json
  
         }

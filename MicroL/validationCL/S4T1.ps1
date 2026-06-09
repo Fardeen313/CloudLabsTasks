@@ -36,38 +36,33 @@ do {
         $instanceId = $instance.InstanceId
  
         # Validation script
-        $commands = @(
+        $Commands = @(
 
-            'SCRIPT="/home/Labuser/scripts/system_report.sh"',
-            'LOG_FILE="/tmp/system_report.log"',
+            'SCRIPT="/home/Labuser/scripts/check_server.sh"',
 
+            '# Check script exists',
             'if [ ! -f "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh was not found."',
+            '    echo "Validation Failed: check_server.sh was not found."',
             '    exit 1',
             'fi',
 
-            'if [ ! -x "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh is not executable."',
+            '# Verify curl is used',
+            'if ! grep -q "curl" "$SCRIPT"; then',
+            '    echo "Validation Failed: Script does not use curl."',
             '    exit 1',
             'fi',
 
             '# Execute script',
-            'bash "$SCRIPT" >/dev/null 2>&1',
+            'OUTPUT=$(bash "$SCRIPT" 2>/dev/null)',
 
-            'sleep 2',
-
-            'if [ ! -f "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log was not created."',
+            '# Verify expected output',
+            'if echo "$OUTPUT" | grep -qi "Server is available"; then',
+            '    echo "Validation Passed: Server availability check completed successfully."',
+            '    exit 0',
+            'else',
+            '    echo "Validation Failed: Script did not report server availability."',
             '    exit 1',
-            'fi',
-
-            'if [ ! -s "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log is empty."',
-            '    exit 1',
-            'fi',
-
-            'echo "Validation Passed: system_report.sh executed successfully and generated report output."',
-            'exit 0'
+            'fi'
 
         )
  
@@ -98,7 +93,7 @@ do {
  
             $message = @{
                 Status  = "Succeeded"
-                Message = "TASK-1 validation passed."
+                Message = "validation passed."
             } | ConvertTo-Json
  
         }
@@ -106,7 +101,7 @@ do {
  
             $message = @{
                 Status  = "Failed"
-                Message = "TASK-1 validation failed."
+                Message = "validation failed."
             } | ConvertTo-Json
  
         }

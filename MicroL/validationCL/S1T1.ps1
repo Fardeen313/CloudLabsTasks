@@ -36,39 +36,37 @@ do {
         $instanceId = $instance.InstanceId
  
         # Validation script
-        $commands = @(
+        $Commands = @(
+            'SCRIPT="/home/Labuser/scripts/parse_logs.sh"',
 
-            'SCRIPT="/home/Labuser/scripts/system_report.sh"',
-            'LOG_FILE="/tmp/system_report.log"',
+            '[ -f "$SCRIPT" ] || { echo FAIL; exit 1; }',
 
-            'if [ ! -f "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh was not found."',
-            '    exit 1',
+            '[ -x "$SCRIPT" ] || { echo FAIL; exit 1; }',
+
+            'grep -q "/opt/logs/application.log" "$SCRIPT" || { echo FAIL; exit 1; }',
+
+            'OUTPUT=$($SCRIPT 2>/dev/null)',
+
+            'ERROR_LINES=$(echo "$OUTPUT" | grep -i "error" | wc -l)',
+
+            'if [ "$ERROR_LINES" -lt 1 ]; then',
+            'echo FAIL',
+            'exit 1',
             'fi',
 
-            'if [ ! -x "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh is not executable."',
-            '    exit 1',
+            'TOTAL_ERRORS=$(echo "$OUTPUT" | grep -oE "Total Errors:[[:space:]]*[0-9]+" | grep -oE "[0-9]+")',
+
+            'if [ -z "$TOTAL_ERRORS" ]; then',
+            'echo FAIL',
+            'exit 1',
             'fi',
 
-            '# Execute script',
-            'bash "$SCRIPT" >/dev/null 2>&1',
-
-            'sleep 2',
-
-            'if [ ! -f "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log was not created."',
-            '    exit 1',
+            'if [ "$TOTAL_ERRORS" -lt 3 ]; then',
+            'echo FAIL',
+            'exit 1',
             'fi',
 
-            'if [ ! -s "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log is empty."',
-            '    exit 1',
-            'fi',
-
-            'echo "Validation Passed: system_report.sh executed successfully and generated report output."',
-            'exit 0'
-
+            'echo PASS'
         )
  
         $response = Send-SSMCommand `
@@ -98,7 +96,7 @@ do {
  
             $message = @{
                 Status  = "Succeeded"
-                Message = "TASK-1 validation passed."
+                Message = "TASK-2 validation passed."
             } | ConvertTo-Json
  
         }
@@ -106,7 +104,7 @@ do {
  
             $message = @{
                 Status  = "Failed"
-                Message = "TASK-1 validation failed."
+                Message = "TASK-2 validation failed."
             } | ConvertTo-Json
  
         }

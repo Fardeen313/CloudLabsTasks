@@ -1,168 +1,137 @@
-using namespace System.Net
-
-param($Request, $TriggerMetadata)
-
-# ==================================================
-# AWS CONFIGURATION
-# ==================================================
-
-$AccessKey = ""
-$SecretKey = ""
-
-$Region = "us-east-1"
-$VMName = "lab-vm-143"
-
-try {
-
-    Write-Host "Initializing AWS credentials..."
-
-    Set-AWSCredential `
-        -AccessKey $AccessKey `
-        -SecretKey $SecretKey
-
-    Initialize-AWSDefaultConfiguration `
-        -Region $Region
-
-    Write-Host "Searching for VM: $VMName"
-
-    $Reservation = Get-EC2Instance `
-        -Region $Region `
-        -Filter @(
-            @{ Name = "tag:Name"; Values = @($VMName) },
-            @{ Name = "instance-state-name"; Values = @("running") }
-        )
-
-    $Instance = $Reservation |
-        Select-Object -ExpandProperty Instances |
-        Select-Object -First 1
-
-    if (-not $Instance) {
-
-        Push-OutputBinding -Name Response -Value (
-            [HttpResponseContext]@{
-                StatusCode = 200
-                Body = "FAIL: Instance not found"
-            }
-        )
-
-        return
-    }
-
-    $InstanceId = $Instance.InstanceId
-
-    Write-Host "Instance Found: $InstanceId"
-
-    # ==============================================
-    # VALIDATION COMMANDS
-    # ==============================================
-
-    $Commands = @(
-    'SCRIPT="/home/Labuser/scripts/monitor_service.sh"',
-
-    'if [ ! -f "$SCRIPT" ]; then',
-    '    echo FAIL',
-    '    exit 1',
-    'fi',
-
-    'grep -q "httpd" "$SCRIPT" || {',
-    '    echo FAIL',
-    '    exit 1',
-    '}',
-
-    'bash "$SCRIPT" >/dev/null 2>&1',
-
-    'sleep 2',
-
-    'if [ "$(systemctl is-active httpd)" = "active" ]; then',
-    '    echo PASS',
-    '    exit 0',
-    'else',
-    '    echo FAIL',
-    '    exit 1',
-    'fi'
-    )
-
-    Write-Host "Sending SSM command..."
-
-    $Response = Send-SSMCommand `
-        -Region $Region `
-        -DocumentName "AWS-RunShellScript" `
-        -InstanceId $InstanceId `
-        -Parameter @{
-            commands = $Commands
+$region = "us-east-1"
+$deployment_id     = $deployment_id
+ 
+Set-DefaultAWSRegion -Region $region
+ 
+$stopRetry = $false
+[int]$retryCount = 0
+$maxRetries = 3
+ 
+do {
+    try {
+ 
+        # Authentication check
+        $identity = Get-STSCallerIdentity
+        $identity.Arn | Out-Null
+ 
+        # VM Name from deployment id
+        $vmName = "lab-vm-$deployment_id"
+ 
+        # Find instance
+        $reservation = Get-EC2Instance `
+            -Region $region `
+            -Filter @(
+                @{ Name = "tag:Name"; Values = @($vmName) },
+                @{ Name = "instance-state-name"; Values = @("running") }
+            )
+ 
+        $instance = $reservation |
+            Select-Object -ExpandProperty Instances |
+            Select-Object -First 1
+ 
+        if (-not $instance) {
+            throw "Instance '$vmName' not found."
         }
+ 
+        $instanceId = $instance.InstanceId
+ 
+        # Validation script
+        $commands = @(
 
-    $CommandId = $Response.CommandId
+            'SCRIPT="/home/Labuser/scripts/monitor_service.sh"',
 
-    if (-not $CommandId) {
+            'if [ ! -f "$SCRIPT" ]; then',
+            '    echo "Validation Failed: monitor_service.sh was not found."',
+            '    exit 1',
+            'fi',
 
-        Push-OutputBinding -Name Response -Value (
-            [HttpResponseContext]@{
-                StatusCode = 200
-                Body = "FAIL: Command submission failed"
-            }
+            'if ! grep -q "httpd" "$SCRIPT"; then',
+            '    echo "Validation Failed: Script does not reference the HTTPD service."',
+            '    exit 1',
+            'fi',
+
+            'bash "$SCRIPT" >/dev/null 2>&1',
+
+            'sleep 2',
+
+            'if [ "$(systemctl is-active httpd)" = "active" ]; then',
+            '    echo "Validation Passed: HTTPD service is running."',
+            '    exit 0',
+            'else',
+            '    echo "Validation Failed: HTTPD service is not running."',
+            '    exit 1',
+            'fi'
+
         )
-
-        return
-    }
-
-    Write-Host "Command ID: $CommandId"
-
-    do {
-
-        Start-Sleep -Seconds 5
-
-        $Invocation = Get-SSMCommandInvocation `
-            -Region $Region `
-            -CommandId $CommandId `
-            -InstanceId $InstanceId
-
-        $Status = $Invocation.Status
-
-        Write-Host "Current Status: $Status"
-
-    } while ($Status -in @("Pending","InProgress","Delayed"))
-
-    $Output = $Invocation.StandardOutputContent
-    $ErrorOutput = $Invocation.StandardErrorContent
-
-    Write-Host "===== STDOUT ====="
-    Write-Host $Output
-
-    if ($ErrorOutput) {
-        Write-Host "===== STDERR ====="
-        Write-Host $ErrorOutput
-    }
-
-    if (($Status -eq "Success") -and ($Output -match "PASS")) {
-
-        Push-OutputBinding -Name Response -Value (
-            [HttpResponseContext]@{
-                StatusCode = 200
-                Body = "PASS"
+ 
+        $response = Send-SSMCommand `
+            -Region $region `
+            -DocumentName "AWS-RunShellScript" `
+            -InstanceId $instanceId `
+            -Parameter @{
+                commands = $commands
             }
-        )
-    }
-    else {
-
-        Push-OutputBinding -Name Response -Value (
-            [HttpResponseContext]@{
-                StatusCode = 200
-                Body = "FAIL"
-            }
-        )
-    }
-
-}
-catch {
-
-    Write-Host "ERROR OCCURRED"
-    Write-Host $_.Exception.Message
-
-    Push-OutputBinding -Name Response -Value (
-        [HttpResponseContext]@{
-            StatusCode = 500
-            Body = $_.Exception.Message
+ 
+        $commandId = $response.CommandId
+ 
+        # Wait for completion
+        do {
+            Start-Sleep -Seconds 5
+ 
+            $invocation = Get-SSMCommandInvocation `
+                -Region $region `
+                -CommandId $commandId `
+                -InstanceId $instanceId
+ 
+            $status = $invocation.Status.ToString()
+ 
+        } while ($status -in @("Pending","InProgress","Delayed"))
+ 
+        if ($status -eq "Success") {
+ 
+            $message = @{
+                Status  = "Succeeded"
+                Message = "TASK-2 validation passed."
+            } | ConvertTo-Json
+ 
         }
-    )
-}
+        else {
+ 
+            $message = @{
+                Status  = "Failed"
+                Message = "TASK-2 validation failed."
+            } | ConvertTo-Json
+ 
+        }
+ 
+        Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+            StatusCode = [System.Net.HttpStatusCode]::OK
+            Body       = $message
+        })
+ 
+        $stopRetry = $true
+    }
+    catch {
+ 
+        if ($retryCount -ge $maxRetries) {
+ 
+            $message = @{
+                Status  = "Failed"
+                Message = "Retry exhausted: $($_.Exception.Message)"
+            } | ConvertTo-Json
+ 
+            Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+                StatusCode = [System.Net.HttpStatusCode]::OK
+                Body       = $message
+            })
+ 
+            $stopRetry = $true
+        }
+        else {
+ 
+            Start-Sleep -Seconds 60
+            $retryCount++
+        }
+    }
+ 
+} while ($stopRetry -eq $false)

@@ -38,35 +38,41 @@ do {
         # Validation script
         $commands = @(
 
-            'SCRIPT="/home/Labuser/scripts/system_report.sh"',
-            'LOG_FILE="/tmp/system_report.log"',
+            'SCRIPT="/home/Labuser/scripts/file_check.sh"',
 
+            '# Check if script exists',
             'if [ ! -f "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh was not found."',
+            '    echo "Validation Failed: file_check.sh was not found."',
             '    exit 1',
             'fi',
 
-            'if [ ! -x "$SCRIPT" ]; then',
-            '    echo "Validation Failed: system_report.sh is not executable."',
+            '# Check for success exit code',
+            'if ! grep -q "exit 0" "$SCRIPT"; then',
+            '    echo "Validation Failed: Success exit code (exit 0) was not found."',
             '    exit 1',
             'fi',
 
-            '# Execute script',
+            '# Check for failure exit code',
+            'if ! grep -q "exit 1" "$SCRIPT"; then',
+            '    echo "Validation Failed: Failure exit code (exit 1) was not found."',
+            '    exit 1',
+            'fi',
+
+            '# Check if script references the required file',
+            'if ! grep -q "/opt/data/testfile.txt" "$SCRIPT"; then',
+            '    echo "Validation Failed: Script does not reference /opt/data/testfile.txt."',
+            '    exit 1',
+            'fi',
+
+            '# Execute script and verify success exit code',
             'bash "$SCRIPT" >/dev/null 2>&1',
 
-            'sleep 2',
-
-            'if [ ! -f "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log was not created."',
+            'if [ $? -ne 0 ]; then',
+            '    echo "Validation Failed: Script did not return exit code 0 when the file exists."',
             '    exit 1',
             'fi',
 
-            'if [ ! -s "$LOG_FILE" ]; then',
-            '    echo "Validation Failed: /tmp/system_report.log is empty."',
-            '    exit 1',
-            'fi',
-
-            'echo "Validation Passed: system_report.sh executed successfully and generated report output."',
+            'echo "Validation Passed: Exit codes are implemented correctly."',
             'exit 0'
 
         )
@@ -98,7 +104,7 @@ do {
  
             $message = @{
                 Status  = "Succeeded"
-                Message = "TASK-1 validation passed."
+                Message = "TASK-2 validation passed."
             } | ConvertTo-Json
  
         }
@@ -106,7 +112,7 @@ do {
  
             $message = @{
                 Status  = "Failed"
-                Message = "TASK-1 validation failed."
+                Message = "TASK-2 validation failed."
             } | ConvertTo-Json
  
         }
