@@ -1,16 +1,32 @@
-# Parse Log File
+# **Scenario 1: Parse Log File**
 
-## Objective
+## **Lab Overview**
 
-Log files are an important source of information for troubleshooting application issues, identifying failures, and monitoring system activity. Administrators and support engineers frequently analyze log files to locate error messages and generate reports that help with operational investigations.
+In this lab, you will use Linux shell scripting to automate log analysis tasks commonly performed by system administrators and support engineers. You will create a shell script that reads a preconfigured application log file, extracts error-related entries, and generates a summary showing the total number of errors detected.
 
-In this exercise, you will create a shell script that reads a preconfigured application log file, extracts all error-related entries, and generates a summary showing the total number of errors detected.
+Log analysis is an essential operational activity used for troubleshooting application failures, identifying system issues, and monitoring service health across Linux environments.
 
-This exercise demonstrates how shell scripting can be used to automate repetitive log analysis tasks commonly performed in Linux environments.
+## **Scenario**
 
-### Learning Outcomes
+You have recently joined an IT Operations team as a Linux Support Engineer.
 
-After completing this exercise, you will be able to:
+The organization hosts several business applications that generate log files containing important operational information. Support teams regularly review these logs to identify failures, troubleshoot incidents, and monitor application health.
+
+Your manager has asked you to automate the log analysis process by creating a shell script that scans an application log file, extracts all error entries, and generates a summary report showing the total number of errors detected.
+
+You have been provided access to a Linux virtual machine containing a preconfigured application log file and must create a shell script to perform the required analysis.
+
+## **Solution**
+
+To address this requirement, you will create a shell script that reads data directly from the application log file, filters entries containing error messages, and displays both the matching log entries and a summary count.
+
+The solution should automate a common troubleshooting task frequently performed in Linux environments while demonstrating core shell scripting concepts such as file handling, text filtering, counting matching records, and displaying formatted output.
+
+---
+
+## **Learning Objectives**
+
+After completing this lab, you will be able to:
 
 * Read data from a log file using a shell script.
 * Filter log entries based on specific keywords.
@@ -18,41 +34,11 @@ After completing this exercise, you will be able to:
 * Display summarized output in the terminal.
 * Create and execute executable shell scripts.
 
-### Estimated Time
-
-**10 Minutes**
-
 ---
 
-## Access Information
+## **Environment Information**
 
-Connect to the Linux virtual machine using the credentials provided below.
-
-### SSH Command
-
-```bash
-ssh <inject key="VMUserName" enableCopy="true"/>@<inject key="VMPublicDNSName" enableCopy="true"/>
-```
-
-### Username
-
-```text
-<inject key="VMUserName" enableCopy="true"/>
-```
-
-### Password
-
-```text
-<inject key="VMPassword" enableCopy="true"/>
-```
-
-> **Note:** If prompted to verify the server fingerprint during the first connection attempt, type **yes** and press **Enter**.
-
----
-
-## Environment Information
-
-A sample application log file has been preconfigured on the virtual machine for this exercise.
+A sample application log file has been preconfigured on the virtual machine.
 
 Log file location:
 
@@ -60,7 +46,7 @@ Log file location:
 /opt/logs/application.log
 ```
 
-To understand the log file contents, review the file:
+Review the contents of the log file:
 
 ```bash
 cat /opt/logs/application.log
@@ -74,13 +60,44 @@ Expected sample entries:
 [error] Authentication failed
 ```
 
-> **Note:** Do not modify the contents of the log file. Validation will verify the script against the existing log data.
+> Note: Do not modify the contents of the log file. Validation will verify the script against the existing log data.
 
 ---
 
-## Task: Parse Error Entries and Generate Summary
+## **Assessment Objectives**
 
-> **Note:** Follow the specified file names and paths exactly to ensure validation succeeds.
+### Review the Application Log File
+
+Inspect the contents of the application log file and identify all error-related entries.
+
+### Create the Log Parsing Script
+
+Create a shell script named:
+
+```bash
+parse_logs.sh
+```
+
+The script must:
+
+* Read data from `/opt/logs/application.log`
+* Display all entries containing `[error]`
+* Display the total number of matching error entries
+
+### Make the Script Executable
+
+Assign execute permissions to the script and verify that it can be executed successfully.
+
+### Execute the Script
+
+Run the script and verify that it displays:
+
+* All error entries found in the log file
+* A summary count of total errors
+
+---
+
+## **Detailed Instructions**
 
 ### Step 1: Review the Log File
 
@@ -90,13 +107,7 @@ Display the contents of the application log file:
 cat /opt/logs/application.log
 ```
 
-Identify all entries containing the keyword:
-
-```text
-ERROR
-```
-
-You should find a total of **3 error entries**.
+You should identify the error entries contained within the log file.
 
 ---
 
@@ -136,17 +147,17 @@ nano parse_logs.sh
 
 The script must:
 
-* Read data from:
+* Read the application log file located at:
 
-  ```bash
-  /opt/logs/application.log
-  ```
+```bash
+/opt/logs/application.log
+```
 
-* Display only entries containing:
+* Display all log entries containing:
 
-  ```text
-  [error]
-  ```
+```text
+[error]
+```
 
 * Display the total number of matching error entries.
 
@@ -178,7 +189,7 @@ Verify permissions:
 ls -l parse_logs.sh
 ```
 
-Expected output should include:
+Expected output should contain:
 
 ```text
 -rwx
@@ -196,67 +207,60 @@ Run the script:
 
 ---
 
-## Success Criteria
+## **Expected Output**
 
-The script output must display:
+The script output should display entries similar to:
 
 ```text
 [error] Database connection failed
-[error] API timeout
-[error] Authentication failure
+[error] Backend timeout
+[error] Authentication failed
 
 Total Errors: 3
 ```
 
-Your output must:
-
-* Display all error entries found in the log file.
-* Display the total number of error entries.
-* Execute without errors.
-* Read data directly from `/opt/logs/application.log`.
-
 ---
 
-## Validation Requirements
+## **Validation Check**
 
 Validation will verify the following:
 
 * The file `~/scripts/parse_logs.sh` exists.
+* The script is executable.
 * The script reads data from `/opt/logs/application.log`.
-* Only `[error]` entries are displayed.
+* Only error entries are displayed.
 * The total error count is displayed.
-* The output contains:
-
-```text
-[error] Database connection failed
-[error] API timeout
-[error] Authentication failure
-```
-
-* The output contains:
-
-```text
-Total Errors: 3
-```
-
 * The script executes successfully without errors.
-
-<validation step="PARSELOG-TASK1" />
 
 ---
 
-## Completion Criteria
+After completing the task, click the **Validation** tab.
 
-You have successfully completed this exercise when:
+<validation step="7bd312ef-23f1-4a65-b833-a6c7e5399e5b" />
+
+---
+
+## **Evaluation Criteria**
+
+Your submission will be evaluated based on:
+
+* Correct creation of the shell script
+* Proper reading of the application log file
+* Accurate filtering of error entries
+* Correct calculation of the total error count
+* Successful script execution
+* Validation completion
+
+---
+
+## **Completion Criteria**
+
+You have successfully completed the assessment when:
 
 * A shell script named `parse_logs.sh` exists in the scripts directory.
-* The script reads the application log file.
+* The script reads data from `/opt/logs/application.log`.
 * The script displays all error entries.
 * The script displays the total error count.
 * Validation completes successfully.
 
----
-
-## Summary
-
-In this exercise, you automated the process of reviewing application logs using a shell script. By filtering log entries and generating a summary count, you created a simple log analysis solution that can be used to support troubleshooting, incident investigation, and operational monitoring activities in Linux environments.
+You have successfully completed the Assessment.

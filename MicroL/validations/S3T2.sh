@@ -19,10 +19,10 @@ if ! echo "$CRON_ENTRIES" | grep -q "system_report.sh"; then
     exit 1
 fi
 
-if ! echo "$CRON_ENTRIES" | grep -qE '^\*/5[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*'; then
-    echo "Validation Failed: Cron schedule is not configured for every 5 minutes."
+if ! echo "$CRON_ENTRIES" | grep -qE '^\*[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*[[:space:]]+\*'; then
+    echo "Validation Failed: Cron schedule is not configured for every 1 minute."
     exit 1
 fi
 
-echo "Validation Passed: Cron job is configured to execute system_report.sh every 5 minutes."
+echo "Validation Passed: Cron job is configured to execute system_report.sh every 1 minutes."
 exit 0

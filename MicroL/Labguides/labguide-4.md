@@ -1,60 +1,57 @@
-# Check Web Server Availability
+# **Scenario 4: Check Web Server Availability**
 
-## Objective
+## **Lab Overview**
 
-Web servers must be available and responsive to serve application content to users. System administrators frequently perform availability checks to verify that web services are running correctly and responding to requests.
+In this assessment, you will create a shell script that verifies whether a web server is available and responding to requests.
 
-In this exercise, you will create a shell script that uses `curl` to verify whether the local Apache web server is available and display the result.
+Web server availability checks are commonly performed by system administrators and support teams to ensure that websites and applications remain accessible to users. Automating these checks helps identify service interruptions quickly and improves operational monitoring.
 
-This exercise demonstrates how shell scripting can be used to automate basic web service health checks in Linux environments.
+## **Scenario**
 
-### Learning Outcomes
+You have recently joined the Linux Operations team as a System Administrator.
 
-After completing this exercise, you will be able to:
+The organization hosts several web-based applications that depend on the Apache HTTP Server (HTTPD). To ensure that these applications remain accessible, administrators regularly verify that the web server is running and responding correctly.
 
-* Create and execute shell scripts.
-* Use the `curl` command to test web server availability.
-* Implement conditional logic in shell scripts.
-* Display status messages based on command results.
-* Automate simple service health checks.
+Your manager has asked you to create a shell script that checks the availability of the local web server and reports whether the service is accessible.
 
-### Estimated Time
+You have been provided access to a Linux virtual machine with Apache HTTP Server already installed and configured.
 
-**10 Minutes**
+## **Solution**
 
----
-
-## Access Information
-
-Connect to the Linux virtual machine using the credentials provided below.
-
-### SSH Command
+To address this requirement, you will create a shell script named **check_server.sh** that uses the `curl` command to send a request to:
 
 ```bash
-ssh <inject key="VMUserName" enableCopy="true"/>@<inject key="VMPublicDNSName" enableCopy="true"/>
+http://localhost
 ```
 
-### Username
-
-```text
-<inject key="VMUserName" enableCopy="true"/>
-```
-
-### Password
-
-```text
-<inject key="VMPassword" enableCopy="true"/>
-```
-
-> **Note:** If prompted to verify the server fingerprint during the first connection attempt, type **yes** and press **Enter**.
+The script should determine whether the web server is responding and display an appropriate status message based on the result.
 
 ---
 
-# Task 1: Create a Web Server Availability Check Script
+## **Assessment Objectives**
 
-> **Note:** Follow the specified file names and paths exactly to ensure validation succeeds.
+### Create a Web Server Availability Check Script
+
+Create a shell script named:
+
+```bash
+check_server.sh
+```
+
+The script must:
+
+* Use the `curl` command to check web server availability.
+* Verify whether the local web server is responding.
+* Display a success message when the server is available.
+* Display a failure message when the server is unavailable.
+
+---
+
+## **Implementation Steps**
 
 ### Step 1: Navigate to the Scripts Directory
+
+Run:
 
 ```bash
 cd ~/scripts
@@ -126,6 +123,8 @@ Ctrl + X
 
 ### Step 5: Make the Script Executable
 
+Run:
+
 ```bash
 chmod +x check_server.sh
 ```
@@ -146,7 +145,7 @@ Expected output should include:
 
 ### Step 6: Execute the Script
 
-Run the script:
+Run:
 
 ```bash
 ./check_server.sh
@@ -160,13 +159,14 @@ Server is available
 
 ---
 
-## Success Criteria
+## **Success Criteria**
 
 Your solution is successful when:
 
 * A shell script named `check_server.sh` exists.
-* The script uses `curl` to check web server availability.
-* The script executes successfully.
+* The script uses the `curl` command.
+* The script verifies web server availability.
+* The script executes successfully without errors.
 * The script displays:
 
 ```text
@@ -176,36 +176,60 @@ Server is available
 when the Apache web server is running.
 
 ---
+ After completing the task, click the **Validation** tab
+<validation step="31bcf261-df44-4636-ac7f-d7a4f776d17c" />
 
-## Validation Requirements
+---
 
-Validation will verify that:
+## **Instructions**
 
-* `~/scripts/check_server.sh` exists.
-* The script contains the `curl` command.
-* The script executes successfully.
-* The script reports server availability.
-* The output contains:
+* Connect to the Linux virtual machine.
+* Navigate to the scripts directory.
+* Create the required shell script.
+* Ensure the script uses the `curl` command.
+* Configure the script to check `http://localhost`.
+* Make the script executable before running it.
+* Verify the output before performing validation.
+* Do not modify the existing web server configuration.
+
+---
+
+## **Evaluation Criteria**
+
+Your submission will be evaluated based on:
+
+* Correct creation of the shell script.
+* Proper use of the `curl` command.
+* Accurate verification of web server availability.
+* Successful script execution.
+* Proper status message display.
+* Successful validation completion.
+
+---
+
+## **Expected Output**
+
+When the web server is available:
 
 ```text
 Server is available
 ```
 
-<validation step="SERVERCHECK-TASK1" />
+When the web server is unavailable:
+
+```text
+Server is unavailable
+```
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
-You have successfully completed this exercise when:
+You have successfully completed the assessment when:
 
 * A shell script named `check_server.sh` exists in the scripts directory.
 * The script uses `curl` to verify web server availability.
-* The script displays the server status.
+* The script displays the appropriate server status.
 * Validation completes successfully.
 
----
-
-## Summary
-
-In this exercise, you created a shell script that checks whether a web server is available by sending an HTTP request using `curl`. This type of availability check is commonly used by system administrators and support teams to verify that web services are running and responding correctly.
+You have successfully completed the Assessment.

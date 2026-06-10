@@ -1,13 +1,14 @@
 [
   {
     "Name": "Lab – Shell Scripting Advanced",
-    "Language": "Spanish",
+    "Language": "English",
     "Files": [
-      { "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/README.md", "Order": 1 },
-      { "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/01-getting-started.md", "Order": 2 },
-      { "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/02-iam-security.md", "Order": 3 },
-      { "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/03-cloudtrail-monitoring.md", "Order": 4 },
-      { "RawFilePath": "https://raw.githubusercontent.com/Fardeen313/CloudLabsTasks/main/aws-security-workshop/Instructions/es/summary.md", "Order": 5 }
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/GettingStarted.md", "Order": 1 },
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-1.md", "Order": 1 },
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-2.md", "Order": 2 },
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-3.md", "Order": 3 },
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-4.md", "Order": 4 },
+      { "RawFilePath": "https://raw.githubusercontent.com/fardeena-spektra/CloudLabsTasks/refs/heads/main/MicroL/Labguides/labguide-5.md", "Order": 5 }
     ]
   }
 ]

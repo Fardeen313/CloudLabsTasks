@@ -6,6 +6,9 @@
     "SecretKey": {
       "value": "GET-SECRET-KEY"
     },
+    "CloudLabsDeploymentID": {
+      "value": "GET-DEPLOYMENT-ID"
+    },
     "CheckAcknowledgement": {
       "value": "TRUE"
     },
@@ -14,9 +17,6 @@
     },
     "subnetCidr": {
       "value": "10.10.0.0/24"
-    },
-    "clgclusterSubnetCidr": {
-      "value": "10.10.1.0/24"
     },
     "VMUserName": {
       "value": "Labuser"
