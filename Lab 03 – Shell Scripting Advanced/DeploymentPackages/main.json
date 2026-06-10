@@ -1,0 +1,443 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "CloudLabs Windows EC2 Environment with SSH over HTTPS support",
+    "Parameters": {
+        "CloudLabsDeploymentID": {
+            "Type": "String"
+        },
+        "AccessKey": {
+            "Description": "Access key to authenticate to AWS account",
+            "Type": "String"
+        },
+        "SecretKey": {
+            "Description": "Secret key to authenticate to AWS account",
+            "Type": "String"
+        },
+        "CheckAcknowledgement": {
+            "Type": "String",
+            "Default": "TRUE",
+            "AllowedValues": [
+                "TRUE",
+                "FALSE"
+            ]
+        },
+        "vpcCidr": {
+            "Type": "String",
+            "Default": "10.10.0.0/16"
+        },
+        "subnetCidr": {
+            "Type": "String",
+            "Default": "10.10.0.0/24"
+        },
+        "AmazonECSTaskExecutionRolePolicy": {
+            "Type": "String",
+            "Default": "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+        },
+        "VMUserName": {
+            "Type": "String",
+            "Default": "Labuser"
+        },
+        "VMPassword": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "TaskExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ecs-tasks.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "ManagedPolicyArns": [
+                    {
+                        "Ref": "AmazonECSTaskExecutionRolePolicy"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "TaskExecutionRole-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "SSMRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "ec2.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+                ]
+            }
+        },
+        "SSMInstanceProfile": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Roles": [
+                    {
+                        "Ref": "SSMRole"
+                    }
+                ]
+            }
+        },
+        "clgVpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "vpcCidr"
+                },
+                "EnableDnsSupport": true,
+                "EnableDnsHostnames": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "clgVpc-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "clgInternetGateway": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "clgInternetGateway-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "attachInternetGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "clgInternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "clgVpc"
+                }
+            }
+        },
+        "vmSubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Sub": "${AWS::Region}a"
+                },
+                "MapPublicIpOnLaunch": true,
+                "VpcId": {
+                    "Ref": "clgVpc"
+                },
+                "CidrBlock": {
+                    "Ref": "subnetCidr"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "vmSubnet-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "RouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "clgVpc"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "RouteTable-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "routesToInternetGateway": {
+            "Type": "AWS::EC2::Route",
+            "DependsOn": "attachInternetGateway",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "clgInternetGateway"
+                }
+            }
+        },
+        "vmSubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "vmSubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                }
+            }
+        },
+        "vmSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow RDP to client host",
+                "VpcId": {
+                    "Ref": "clgVpc"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "0",
+                        "ToPort": "65535",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "vmSecurityGroup-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "clgSg": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Security group for Fargate ECS container - fully open",
+                "VpcId": {
+                    "Ref": "clgVpc"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "-1",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "-1",
+                        "CidrIpv6": "::/0"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "-1",
+                        "CidrIpv6": "::/0"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "clgSg-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        },
+        "vmKeyPair": {
+            "Type": "AWS::EC2::KeyPair",
+            "Properties": {
+                "KeyName": "labkeypair"
+            }
+        },
+        "vmInstance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {
+                    "Fn::Sub": "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}"
+                },
+                "InstanceType": "t3.micro",
+                "IamInstanceProfile": {
+                    "Ref": "SSMInstanceProfile"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "vmSecurityGroup"
+                    }
+                ],
+                "KeyName": {
+                    "Ref": "vmKeyPair"
+                },
+                "SubnetId": {
+                    "Ref": "vmSubnet"
+                },
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Sub": "#!/bin/bash\nuseradd -m -s /bin/bash ${VMUserName}\necho \"${VMUserName}:${VMPassword}\" | chpasswd\nusermod -aG wheel ${VMUserName}\nsed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config\ngrep -q '^PasswordAuthentication yes' /etc/ssh/sshd_config || echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config\ngrep -q '^UsePAM yes' /etc/ssh/sshd_config || echo 'UsePAM yes' >> /etc/ssh/sshd_config\nsystemctl restart sshd || service sshd restart || service ssh restart\ndnf update -y\ndnf install -y httpd cronie wget nano vim curl --allowerasing\nsystemctl enable httpd\nsystemctl start httpd\nsystemctl enable crond\nsystemctl start crond\nmkdir -p /home/${VMUserName}/scripts\nchown -R ${VMUserName}:${VMUserName} /home/${VMUserName}/scripts\nmkdir -p /opt/logs\nmkdir -p /opt/validation\necho '[error] Database connection failed' > /opt/logs/application.log\necho '[error] Backend timeout' >> /opt/logs/application.log\necho '[error] Authentication failed' >> /opt/logs/application.log\nchmod -R 755 /opt/logs\nchmod -R 755 /opt/validation\nchown -R ${VMUserName}:${VMUserName} /opt/logs\nchown -R ${VMUserName}:${VMUserName} /opt/validation\necho 'CloudLabs Shell Scripting Lab' > /var/www/html/index.html\nmkdir -p /opt/data\necho 'Shell Scripting Validation File' > /opt/data/testfile.txt\nchmod 644 /opt/data/testfile.txt\nsystemctl enable amazon-ssm-agent\nsystemctl restart amazon-ssm-agent"
+                    }
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Sub": "lab-vm-${CloudLabsDeploymentID}"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "CloudLabsDeploymentID": {
+            "Description": "CloudLabs Deployment ID",
+            "Value": {
+                "Ref": "CloudLabsDeploymentID"
+            }
+        },
+        "AWSAccountID": {
+            "Description": "AWS Account ID",
+            "Value": {
+                "Ref": "AWS::AccountId"
+            }
+        },
+        "Region": {
+            "Description": "AWS Region",
+            "Value": {
+                "Ref": "AWS::Region"
+            }
+        },
+        "VpcId": {
+            "Description": "The ID of the VPC",
+            "Value": {
+                "Ref": "clgVpc"
+            }
+        },
+        "vmSubnetId": {
+            "Description": "The ID of the VM Subnet",
+            "Value": {
+                "Ref": "vmSubnet"
+            }
+        },
+        "vmSecurityGroupId": {
+            "Description": "The SG ID of the VM",
+            "Value": {
+                "Ref": "vmSecurityGroup"
+            }
+        },
+        "clusterSecurityGroupId": {
+            "Description": "The SG ID of the Cluster",
+            "Value": {
+                "Ref": "clgSg"
+            }
+        },
+        "TaskExecutionRole": {
+            "Description": "The ARN of the Role utilised by ECS Task Definition",
+            "Value": {
+                "Fn::GetAtt": [
+                    "TaskExecutionRole",
+                    "Arn"
+                ]
+            }
+        },
+        "InstanceId": {
+            "Description": "EC2 Instance ID",
+            "Value": {
+                "Ref": "vmInstance"
+            }
+        },
+        "VMName": {
+            "Description": "Name of the VM",
+            "Value": "labvm"
+        },
+        "VMPublicIP": {
+            "Description": "VM Public IP",
+            "Value": {
+                "Fn::GetAtt": [
+                    "vmInstance",
+                    "PublicIp"
+                ]
+            }
+        },
+        "VMPrivateIP": {
+            "Description": "VM Private IP",
+            "Value": {
+                "Fn::GetAtt": [
+                    "vmInstance",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "VMPublicDNSName": {
+            "Description": "Public DNS Name",
+            "Value": {
+                "Fn::GetAtt": [
+                    "vmInstance",
+                    "PublicDnsName"
+                ]
+            }
+        },
+        "VMPrivateDNSName": {
+            "Description": "Private DNS Name",
+            "Value": {
+                "Fn::GetAtt": [
+                    "vmInstance",
+                    "PrivateDnsName"
+                ]
+            }
+        },
+        "VMUserName": {
+            "Description": "VM Username",
+            "Value": {
+                "Ref": "VMUserName"
+            }
+        },
+        "VMPassword": {
+            "Description": "VM Password",
+            "Value": {
+                "Ref": "VMPassword"
+            }
+        }
+    }
+}

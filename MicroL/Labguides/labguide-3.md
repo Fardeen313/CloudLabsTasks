@@ -62,9 +62,9 @@ The cron job must:
 
 ## Implementation Steps
 
-### Task 1: Create the Reporting Script
+## Task 1: Create the Reporting Script
 
-#### Step 1: Navigate to the Scripts Directory
+### Step 1: Navigate to the Scripts Directory
 
 Run:
 
@@ -86,7 +86,7 @@ Expected output:
 
 ---
 
-#### Step 2: Create the Script
+### Step 2: Create the Script
 
 Create a new shell script:
 
@@ -96,7 +96,7 @@ nano system_report.sh
 
 ---
 
-#### Step 3: Configure the Script
+### Step 3: Configure the Script
 
 The script must append the current date and time to:
 
@@ -112,7 +112,7 @@ Wed Jun 3 10:15:01 UTC 2026
 
 ---
 
-#### Step 4: Save the Script
+### Step 4: Save the Script
 
 Save and exit Nano:
 
@@ -124,7 +124,7 @@ Ctrl + X
 
 ---
 
-#### Step 5: Make the Script Executable
+### Step 5: Make the Script Executable
 
 Run:
 
@@ -146,7 +146,7 @@ Expected output should include:
 
 ---
 
-#### Step 6: Test the Script
+### Step 6: Test the Script
 
 Execute:
 

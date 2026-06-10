@@ -76,13 +76,13 @@ sudo systemctl is-active httpd
 
 ## Implementation Steps
 
-### Task 1: Stop the HTTPD Service
+## Task 1: Stop the HTTPD Service
 
-#### Task Overview
+### Task Overview
 
 In this task, you will manually stop the HTTPD service and verify that it is no longer running.
 
-#### Step 1: Verify Current Service Status
+### Step 1: Verify Current Service Status
 
 Run:
 
@@ -98,7 +98,7 @@ active
 
 ---
 
-#### Step 2: Stop the Service
+### Step 2: Stop the Service
 
 Stop the HTTPD service:
 
@@ -108,7 +108,7 @@ sudo systemctl stop httpd
 
 ---
 
-#### Step 3: Verify the Service Has Stopped
+### Step 3: Verify the Service Has Stopped
 
 Run:
 
@@ -130,15 +130,15 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-### Task 2: Create a Service Monitoring Script
+## Task 2: Create a Service Monitoring Script
 
-#### Task Overview
+### Task Overview
 
 In this task, you will create a shell script that checks whether the HTTPD service is running and automatically starts it if it is stopped.
 
 > Note: Follow the specified file names and paths exactly to ensure validation succeeds.
 
-#### Step 1: Navigate to the Scripts Directory
+### Step 1: Navigate to the Scripts Directory
 
 Run:
 
@@ -160,7 +160,7 @@ Expected output:
 
 ---
 
-#### Step 2: Create the Monitoring Script
+### Step 2: Create the Monitoring Script
 
 Create a new script named:
 
@@ -170,7 +170,7 @@ nano monitor_service.sh
 
 ---
 
-#### Step 3: Configure the Script
+### Step 3: Configure the Script
 
 Configure the script to:
 
@@ -187,7 +187,7 @@ httpd
 
 ---
 
-#### Step 4: Save the Script
+### Step 4: Save the Script
 
 Save and exit Nano:
 
@@ -199,7 +199,7 @@ Ctrl + X
 
 ---
 
-#### Step 5: Make the Script Executable
+### Step 5: Make the Script Executable
 
 Assign execute permissions:
 
@@ -221,7 +221,7 @@ Expected output should contain:
 
 ---
 
-#### Step 6: Execute the Script
+### Step 6: Execute the Script
 
 Run:
 
@@ -231,7 +231,7 @@ Run:
 
 ---
 
-#### Step 7: Verify the Service Status
+### Step 7: Verify the Service Status
 
 Verify that the HTTPD service is running:
 
