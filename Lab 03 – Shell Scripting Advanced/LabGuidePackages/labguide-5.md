@@ -1,12 +1,12 @@
-# Scenario 5: Use Exit Codes and Debugging
+# **Scenario 5: Use Exit Codes and Debugging**
 
-## Lab Overview
+## **Lab Overview**
 
 In this assessment, you will create a shell script that verifies whether a file exists and returns appropriate exit codes based on the result.
 
 Exit codes are a fundamental part of Linux shell scripting and automation. They are commonly used by system administrators, monitoring tools, schedulers, and automation platforms to determine whether a command or script executed successfully.
 
-## Scenario
+## **Scenario**
 
 You have recently joined a Linux Operations team as a Junior System Administrator.
 
@@ -16,7 +16,7 @@ Your manager has asked you to create a shell script that verifies the existence 
 
 You have been provided access to a Linux virtual machine containing a preconfigured file that must be validated.
 
-### Solution
+## **Solution**
 
 To address this requirement, you will create a shell script named **file_check.sh** that checks whether a specific file exists.
 
@@ -29,9 +29,9 @@ You will then execute the script and verify its exit status using standard Linux
 
 ---
 
-## Assessment Objectives
+## **Assessment Objectives**
 
-### Verify File Existence
+### **Verify File Existence**
 
 Check whether the following file exists:
 
@@ -41,7 +41,7 @@ Check whether the following file exists:
 
 ---
 
-### Create an Exit Code Validation Script
+### **Create an Exit Code Validation Script**
 
 Create a shell script named:
 
@@ -59,13 +59,13 @@ The script must:
 
 ---
 
-### Verify Script Exit Status
+### **Verify Script Exit Status**
 
 Execute the script and confirm that the appropriate exit code is returned.
 
 ---
 
-## Environment Information
+## **Environment Information**
 
 A sample file has been preconfigured for this assessment.
 
@@ -89,7 +89,7 @@ Expected output:
 
 ---
 
-## Implementation Steps
+## **Implementation Steps**
 
 ### Step 1: Navigate to the Scripts Directory
 
@@ -233,7 +233,7 @@ Expected output:
 
 ---
 
-## Success Criteria
+## **Success Criteria**
 
 Your solution is successful when:
 
@@ -246,7 +246,7 @@ Your solution is successful when:
  After completing the task, click the **Validation** tab
 <validation step="33df1f62-1141-4bc2-bf22-cecb8bf6abe3" />
 
-## Instructions
+## **Instructions**
 
 * Connect to the Linux virtual machine.
 * Verify that `/opt/data/testfile.txt` exists.
@@ -259,7 +259,7 @@ Your solution is successful when:
 
 ---
 
-## Evaluation Criteria
+## **Evaluation Criteria**
 
 Your submission will be evaluated based on:
 
@@ -272,7 +272,7 @@ Your submission will be evaluated based on:
 
 ---
 
-## Expected Output
+## **Expected Output**
 
 When the file exists:
 
@@ -312,7 +312,7 @@ Expected result:
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
 You have successfully completed the assessment when:
 
