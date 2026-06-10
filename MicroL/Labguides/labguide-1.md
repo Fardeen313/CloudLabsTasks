@@ -97,7 +97,7 @@ Run the script and verify that it displays:
 
 ---
 
-## Detailed Instructions
+## **Detailed Instructions**
 
 ### Step 1: Review the Log File
 
