@@ -56,7 +56,7 @@ The script must:
 
 ---
 
-## Environment Information
+## **Environment Information**
 
 The Apache HTTP Server (HTTPD) has been preinstalled and configured on the virtual machine.
 
@@ -76,7 +76,7 @@ sudo systemctl is-active httpd
 
 ## **Implementation Steps**
 
-### **Task 1 : Stop the HTTPD Service**
+### **Task 1: Stop the HTTPD Service**
 
 ### **Task Overview**
 

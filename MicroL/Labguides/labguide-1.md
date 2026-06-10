@@ -1,12 +1,12 @@
-# Scenario 1: Parse Log File
+# **Scenario 1: Parse Log File**
 
-## Lab Overview
+## **Lab Overview**
 
 In this lab, you will use Linux shell scripting to automate log analysis tasks commonly performed by system administrators and support engineers. You will create a shell script that reads a preconfigured application log file, extracts error-related entries, and generates a summary showing the total number of errors detected.
 
 Log analysis is an essential operational activity used for troubleshooting application failures, identifying system issues, and monitoring service health across Linux environments.
 
-## Scenario
+## **Scenario**
 
 You have recently joined an IT Operations team as a Linux Support Engineer.
 
@@ -16,7 +16,7 @@ Your manager has asked you to automate the log analysis process by creating a sh
 
 You have been provided access to a Linux virtual machine containing a preconfigured application log file and must create a shell script to perform the required analysis.
 
-## Solution
+## **Solution**
 
 To address this requirement, you will create a shell script that reads data directly from the application log file, filters entries containing error messages, and displays both the matching log entries and a summary count.
 
@@ -24,7 +24,7 @@ The solution should automate a common troubleshooting task frequently performed 
 
 ---
 
-## Learning Objectives
+## **Learning Objectives**
 
 After completing this lab, you will be able to:
 
@@ -36,7 +36,7 @@ After completing this lab, you will be able to:
 
 ---
 
-## Environment Information
+## **Environment Information**
 
 A sample application log file has been preconfigured on the virtual machine.
 
@@ -64,7 +64,7 @@ Expected sample entries:
 
 ---
 
-## Assessment Objectives
+## **Assessment Objectives**
 
 ### Review the Application Log File
 
@@ -207,7 +207,7 @@ Run the script:
 
 ---
 
-## Expected Output
+## **Expected Output**
 
 The script output should display entries similar to:
 
@@ -221,7 +221,7 @@ Total Errors: 3
 
 ---
 
-## Validation Check
+## **Validation Check**
 
 Validation will verify the following:
 
@@ -240,7 +240,7 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-## Evaluation Criteria
+## **Evaluation Criteria**
 
 Your submission will be evaluated based on:
 
@@ -253,7 +253,7 @@ Your submission will be evaluated based on:
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
 You have successfully completed the assessment when:
 

@@ -1,12 +1,12 @@
-# Scenario 3: Automate Script Execution Using Cron
+# **Scenario 3: Automate Script Execution Using Cron**
 
-## Lab Overview
+## **Lab Overview**
 
 In this assessment, you will create a shell script that generates a simple system report and configure a cron job to execute the script automatically at scheduled intervals.
 
 System administrators commonly use cron jobs to automate repetitive tasks such as generating reports, collecting system information, monitoring services, and performing routine maintenance. By automating these activities, organizations can improve operational efficiency and reduce manual effort.
 
-## Scenario
+## **Scenario**
 
 You have recently joined the Linux Operations team as a System Administrator.
 
@@ -14,7 +14,7 @@ The organization requires automated system reporting to help monitor server acti
 
 You have been provided access to a Linux virtual machine and must complete the reporting automation solution.
 
-## Solution
+## **Solution**
 
 To address this requirement, you will create a shell script named **system_report.sh** that appends the current date and time to a log file located at:
 
@@ -26,9 +26,9 @@ After creating and testing the script, you will configure a cron job to execute 
 
 ---
 
-## Assessment Objectives
+## **Assessment Objectives**
 
-### Task 1: Create a Scheduled Reporting Script
+### **Task 1: Create a Scheduled Reporting Script**
 
 Create a shell script named:
 
@@ -44,7 +44,7 @@ The script must:
 
 ---
 
-### Task 2: Configure a Cron Job
+### **Task 2: Configure a Cron Job**
 
 Create a cron job that executes:
 
@@ -60,9 +60,9 @@ The cron job must:
 
 ---
 
-## Implementation Steps
+## **Implementation Steps**
 
-## Task 1: Create the Reporting Script
+### **Task 1: Create the Reporting Script**
 
 ### Step 1: Navigate to the Scripts Directory
 
@@ -169,7 +169,7 @@ You should see a timestamp entry.
 
 ---
 
-## Task 2: Configure Automated Execution
+### **Task 2: Configure Automated Execution**
 
 ### Step 1: Open Crontab Editor
 
@@ -237,7 +237,7 @@ Wed Jun 3 10:17:01 UTC 2026
 
 ---
 
-## Instructions
+## **Instructions**
 
 * Connect to the Linux virtual machine.
 * Navigate to the scripts directory.
@@ -250,7 +250,7 @@ Wed Jun 3 10:17:01 UTC 2026
 
 ---
 
-## Evaluation Criteria
+## **Evaluation Criteria**
 
 Your submission will be evaluated based on:
 
@@ -263,7 +263,7 @@ Your submission will be evaluated based on:
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
 You have successfully completed the assessment when:
 

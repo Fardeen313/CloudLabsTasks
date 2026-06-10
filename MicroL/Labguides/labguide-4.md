@@ -1,12 +1,12 @@
-# Scenario 4: Check Web Server Availability
+# **Scenario 4: Check Web Server Availability**
 
-## Lab Overview
+## **Lab Overview**
 
 In this assessment, you will create a shell script that verifies whether a web server is available and responding to requests.
 
 Web server availability checks are commonly performed by system administrators and support teams to ensure that websites and applications remain accessible to users. Automating these checks helps identify service interruptions quickly and improves operational monitoring.
 
-## Scenario
+## **Scenario**
 
 You have recently joined the Linux Operations team as a System Administrator.
 
@@ -16,7 +16,7 @@ Your manager has asked you to create a shell script that checks the availability
 
 You have been provided access to a Linux virtual machine with Apache HTTP Server already installed and configured.
 
-## Solution
+## **Solution**
 
 To address this requirement, you will create a shell script named **check_server.sh** that uses the `curl` command to send a request to:
 
@@ -28,7 +28,7 @@ The script should determine whether the web server is responding and display an 
 
 ---
 
-## Assessment Objectives
+## **Assessment Objectives**
 
 ### Create a Web Server Availability Check Script
 
@@ -47,7 +47,7 @@ The script must:
 
 ---
 
-## Implementation Steps
+## **Implementation Steps**
 
 ### Step 1: Navigate to the Scripts Directory
 
@@ -159,7 +159,7 @@ Server is available
 
 ---
 
-## Success Criteria
+## **Success Criteria**
 
 Your solution is successful when:
 
@@ -181,7 +181,7 @@ when the Apache web server is running.
 
 ---
 
-## Instructions
+## **Instructions**
 
 * Connect to the Linux virtual machine.
 * Navigate to the scripts directory.
@@ -194,7 +194,7 @@ when the Apache web server is running.
 
 ---
 
-## Evaluation Criteria
+## **Evaluation Criteria**
 
 Your submission will be evaluated based on:
 
@@ -207,7 +207,7 @@ Your submission will be evaluated based on:
 
 ---
 
-## Expected Output
+## **Expected Output**
 
 When the web server is available:
 
@@ -223,7 +223,7 @@ Server is unavailable
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
 You have successfully completed the assessment when:
 
