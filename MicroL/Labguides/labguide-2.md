@@ -76,7 +76,7 @@ sudo systemctl is-active httpd
 
 ## **Implementation Steps**
 
-## **Task 1 : Stop the HTTPD Service**
+### **Task 1 : Stop the HTTPD Service**
 
 ### **Task Overview**
 
@@ -130,7 +130,7 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-## **Task 2: Create a Service Monitoring Script**
+### **Task 2: Create a Service Monitoring Script**
 
 ### **Task Overview**
 
