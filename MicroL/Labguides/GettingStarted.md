@@ -27,14 +27,14 @@ Your virtual machine is the environment where all lab activities will be perform
 
 To view environment information, credentials, and resource details, navigate to the **Environment** tab.
 
-![alt text](image-12.png)
+![alt text](image-21.png)
 
 ---
 # Utilizing the Split Window Feature
 
 For convenience, you can open the lab guide in a separate window by selecting the Split Window button from the Top right corner.
 
-![alt text](image-7.png)
+![alt text](image-20.png)
 
 # Connecting to the Virtual Machine
 
@@ -68,7 +68,7 @@ These commands should display your current username and the hostname of the lab 
 
 You may Start, Restart, or Stop your virtual machine at any time using the **Resources** tab available within the lab environment.
 
-![alt text](image-8.png)
+![alt text](image-19.png)
 
 ---
 
@@ -76,7 +76,7 @@ You may Start, Restart, or Stop your virtual machine at any time using the **Res
 
 To adjust the zoom level of the lab environment page, use the zoom controls located next to the session timer.
 
-![alt text](image-10.png)
+![alt text](image-18.png)
 
 ---
 
@@ -87,7 +87,7 @@ After completing each task, select the **Validate** button located within the Va
 * If validation succeeds, proceed to the next task.
 * If validation fails, carefully review the error message and revisit the task instructions before attempting validation again.
 
-![alt text](image-11.png)
+![alt text](image-17.png)
 
 ---
 
@@ -104,4 +104,4 @@ The CloudLabs support team is available 24/7 throughout your lab experience.
 ---
 
 Click **Next >>** to begin the assessment.
-![alt text](image-13.png)
+![alt text](image-16.png)

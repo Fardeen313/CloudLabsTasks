@@ -1,4 +1,4 @@
-# Shell Scripting Assessment Lab
+# Shell Scripting Advance Assessment Lab
 
 ## Lab Overview
 
@@ -32,12 +32,6 @@ After completing this lab, you will be able to:
 * Display summarized output in the terminal.
 * Create and execute executable shell scripts.
 
-## Estimated Time
-
-**20 Minutes**
-
----
-
 ## Environment Information
 
 A sample application log file has been preconfigured on the virtual machine.
@@ -58,8 +52,8 @@ Expected sample entries:
 
 ```
  [error] Database connection failed
- [error] Backend timeout
- [error] Authentication failed
+  [error] Backend timeout
+  [error] Authentication failed
 ```
 
 > Note: Do not modify the contents of the log file. Validation will verify the script against the existing log data.
@@ -213,10 +207,10 @@ Run the script:
 
 The script output should display entries similar to:
 
-```text
+```
 [error] Database connection failed
-[error] Backend timeout
-[error] Authentication failed
+ [error] Backend timeout
+ [error] Authentication failed
 
 Total Errors: 3
 ```
@@ -234,6 +228,7 @@ Validation will verify the following:
 * The total error count is displayed.
 * The script executes successfully without errors.
 
+ After completing the task, click the **Validation** tab
 <validation step="7bd312ef-23f1-4a65-b833-a6c7e5399e5b" />
 
 ---
