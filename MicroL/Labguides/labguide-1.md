@@ -56,10 +56,10 @@ cat /opt/logs/application.log
 
 Expected sample entries:
 
-```text
-[error] Database connection failed
-[error] Backend timeout
-[error] Authentication failed
+```
+ [error] Database connection failed
+ [error] Backend timeout
+ [error] Authentication failed
 ```
 
 > Note: Do not modify the contents of the log file. Validation will verify the script against the existing log data.

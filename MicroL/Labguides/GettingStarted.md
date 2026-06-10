@@ -104,3 +104,4 @@ The CloudLabs support team is available 24/7 throughout your lab experience.
 ---
 
 Click **Next >>** to begin the assessment.
+![alt text](image-13.png)
