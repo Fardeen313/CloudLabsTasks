@@ -68,7 +68,7 @@ These commands should display your current username and the hostname of the lab 
 
 You may Start, Restart, or Stop your virtual machine at any time using the **Resources** tab available within the lab environment.
 
-![alt text](image-19.png)
+![alt text](image-22.png)
 
 ---
 
