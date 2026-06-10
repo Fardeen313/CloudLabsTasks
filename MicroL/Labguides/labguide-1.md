@@ -1,12 +1,14 @@
 # Shell Scripting Advance Assessment Lab
 
-## Lab Overview
+## Scenario 1: Parse Log File
+
+### Lab Overview
 
 In this lab, you will use Linux shell scripting to automate log analysis tasks commonly performed by system administrators and support engineers. You will create a shell script that reads a preconfigured application log file, extracts error-related entries, and generates a summary showing the total number of errors detected.
 
 Log analysis is an essential operational activity used for troubleshooting application failures, identifying system issues, and monitoring service health across Linux environments.
 
-## Scenario
+### Scenario
 
 You have recently joined an IT Operations team as a Linux Support Engineer.
 
@@ -16,11 +18,13 @@ Your manager has asked you to automate the log analysis process by creating a sh
 
 You have been provided access to a Linux virtual machine containing a preconfigured application log file and must create a shell script to perform the required analysis.
 
-## Solution
+### Solution
 
 To address this requirement, you will create a shell script that reads data directly from the application log file, filters entries containing error messages, and displays both the matching log entries and a summary count.
 
 The solution should automate a common troubleshooting task frequently performed in Linux environments while demonstrating core shell scripting concepts such as file handling, text filtering, counting matching records, and displaying formatted output.
+
+---
 
 ## Learning Objectives
 
@@ -31,6 +35,8 @@ After completing this lab, you will be able to:
 * Count matching log entries.
 * Display summarized output in the terminal.
 * Create and execute executable shell scripts.
+
+---
 
 ## Environment Information
 
@@ -50,10 +56,10 @@ cat /opt/logs/application.log
 
 Expected sample entries:
 
-```
- [error] Database connection failed
- [error] Backend timeout
- [error] Authentication failed
+```text
+[error] Database connection failed
+[error] Backend timeout
+[error] Authentication failed
 ```
 
 > Note: Do not modify the contents of the log file. Validation will verify the script against the existing log data.
@@ -93,9 +99,9 @@ Run the script and verify that it displays:
 
 ---
 
-# Detailed Instructions
+## Detailed Instructions
 
-## Step 1: Review the Log File
+### Step 1: Review the Log File
 
 Display the contents of the application log file:
 
@@ -107,7 +113,7 @@ You should identify the error entries contained within the log file.
 
 ---
 
-## Step 2: Navigate to the Scripts Directory
+### Step 2: Navigate to the Scripts Directory
 
 Move to the scripts directory:
 
@@ -129,7 +135,7 @@ Expected output:
 
 ---
 
-## Step 3: Create the Shell Script
+### Step 3: Create the Shell Script
 
 Create a new shell script named:
 
@@ -139,7 +145,7 @@ nano parse_logs.sh
 
 ---
 
-## Step 4: Configure the Script
+### Step 4: Configure the Script
 
 The script must:
 
@@ -159,7 +165,7 @@ The script must:
 
 ---
 
-## Step 5: Save the Script
+### Step 5: Save the Script
 
 Save and exit Nano:
 
@@ -171,7 +177,7 @@ Ctrl + X
 
 ---
 
-## Step 6: Make the Script Executable
+### Step 6: Make the Script Executable
 
 Assign execute permissions:
 
@@ -193,7 +199,7 @@ Expected output should contain:
 
 ---
 
-## Step 7: Execute the Script
+### Step 7: Execute the Script
 
 Run the script:
 
@@ -207,10 +213,10 @@ Run the script:
 
 The script output should display entries similar to:
 
-```
- [error] Database connection failed
- [error] Backend timeout
- [error] Authentication failed
+```text
+[error] Database connection failed
+[error] Backend timeout
+[error] Authentication failed
 
 Total Errors: 3
 ```
@@ -228,7 +234,10 @@ Validation will verify the following:
 * The total error count is displayed.
 * The script executes successfully without errors.
 
- After completing the task, click the **Validation** tab
+---
+
+After completing the task, click the **Validation** tab.
+
 <validation step="7bd312ef-23f1-4a65-b833-a6c7e5399e5b" />
 
 ---
