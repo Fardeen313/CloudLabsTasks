@@ -1,12 +1,12 @@
-# Scenario 2: Monitor Service and Restart
+# **Scenario 2: Monitor Service and Restart**
 
-## Lab Overview
+## **Lab Overview**
 
 In this assessment, you will use Linux shell scripting to monitor and manage system services. You will verify the status of the Apache HTTP Server (HTTPD), simulate a service outage by stopping the service, and then create a shell script that automatically detects and starts the service when it is not running.
 
 Service monitoring and recovery are common administrative responsibilities in Linux environments. Automating these tasks helps ensure application availability and reduces manual intervention during service failures.
 
-## Scenario
+## **Scenario**
 
 You have recently joined an Infrastructure Operations team as a Linux Administrator.
 
@@ -16,7 +16,7 @@ Your manager has asked you to verify the status of the HTTPD service, simulate a
 
 You have been provided access to a Linux virtual machine with HTTPD preinstalled and configured.
 
-## Solution
+## **Solution**
 
 To address this requirement, you will first manually stop the HTTPD service and verify that it is no longer running. You will then create a shell script that checks the service status and automatically starts the service if it is inactive.
 
@@ -24,9 +24,9 @@ The solution demonstrates common Linux administration tasks including service ma
 
 ---
 
-## Assessment Objectives
+## **Assessment Objectives**
 
-### Task 1: Stop the HTTPD Service
+### **Task 1: Stop the HTTPD Service**
 
 Verify the current status of the HTTPD service and manually stop it.
 
@@ -38,7 +38,7 @@ The service must:
 
 ---
 
-### Task 2: Create a Service Monitoring Script
+### **Task 2: Create a Service Monitoring Script**
 
 Create a shell script named:
 
@@ -74,11 +74,11 @@ sudo systemctl is-active httpd
 
 ---
 
-## Implementation Steps
+## **Implementation Steps**
 
-## Task 1: Stop the HTTPD Service
+## **Task 1 : Stop the HTTPD Service**
 
-### Task Overview
+### **Task Overview**
 
 In this task, you will manually stop the HTTPD service and verify that it is no longer running.
 
@@ -90,7 +90,7 @@ Run:
 sudo systemctl is-active httpd
 ```
 
-Expected output:
+**Expected output:**
 
 ```text
 active
@@ -130,9 +130,9 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-## Task 2: Create a Service Monitoring Script
+## **Task 2: Create a Service Monitoring Script**
 
-### Task Overview
+### **Task Overview**
 
 In this task, you will create a shell script that checks whether the HTTPD service is running and automatically starts it if it is stopped.
 
@@ -253,7 +253,7 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-## Instructions
+## **Instructions**
 
 * Connect to the Linux virtual machine.
 * Verify the HTTPD service status.
@@ -268,7 +268,7 @@ After completing the task, click the **Validation** tab.
 
 ---
 
-## Evaluation Criteria
+## **Evaluation Criteria**
 
 Your submission will be evaluated based on:
 
@@ -288,7 +288,7 @@ Your submission will be evaluated based on:
 
 ---
 
-## Validation Requirements
+## **Validation Requirements**
 
 ### Task 1 Validation
 
@@ -312,7 +312,7 @@ Validation will verify:
 
 ---
 
-## Completion Criteria
+## **Completion Criteria**
 
 You have successfully completed the assessment when:
 
