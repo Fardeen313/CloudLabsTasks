@@ -1,33 +1,75 @@
-# Scenario 5 : Use Exit Codes and Debugging
+# Shell Scripting Assessment Lab
 
-## Objective
+## Scenario 5: Use Exit Codes and Debugging
 
-Exit codes are used in shell scripting to indicate whether a command or script completed successfully. A value of `0` typically indicates success, while non-zero values indicate an error or failure condition.
+### Lab Overview
 
-In this exercise, you will create a shell script that checks for the existence of a file and returns different exit codes based on the result. You will also verify the script's exit status after execution.
+In this assessment, you will create a shell script that verifies whether a file exists and returns appropriate exit codes based on the result.
 
-This exercise demonstrates how exit codes can be used to control script behavior and provide feedback to users and automated processes.
+Exit codes are a fundamental part of Linux shell scripting and automation. They are commonly used by system administrators, monitoring tools, schedulers, and automation platforms to determine whether a command or script executed successfully.
 
-### Learning Outcomes
+### Scenario
 
-After completing this exercise, you will be able to:
+You have recently joined a Linux Operations team as a Junior System Administrator.
 
-* Create and execute shell scripts.
-* Check whether a file exists.
-* Use exit codes to indicate success or failure.
-* Verify script exit status using shell commands.
-* Understand how exit codes are used in Linux automation.
+The organization uses shell scripts to automate routine administrative tasks and relies on exit codes to determine whether those tasks complete successfully. Automated monitoring systems review these exit codes and trigger alerts whenever failures occur.
 
-### Estimated Time
+Your manager has asked you to create a shell script that verifies the existence of a specific file and returns different exit codes depending on whether the file is present or missing.
 
-**15 Minutes**
+You have been provided access to a Linux virtual machine containing a preconfigured file that must be validated.
+
+### Solution
+
+To address this requirement, you will create a shell script named **file_check.sh** that checks whether a specific file exists.
+
+The script must display an appropriate message indicating the result and return:
+
+* Exit Code **0** when the file exists.
+* Exit Code **1** when the file is missing.
+
+You will then execute the script and verify its exit status using standard Linux shell commands.
 
 ---
 
+## Assessment Objectives
+
+### Verify File Existence
+
+Check whether the following file exists:
+
+```bash
+/opt/data/testfile.txt
+```
+
+---
+
+### Create an Exit Code Validation Script
+
+Create a shell script named:
+
+```bash
+file_check.sh
+```
+
+The script must:
+
+* Verify the existence of `/opt/data/testfile.txt`
+* Display a success message when the file exists
+* Display a failure message when the file is missing
+* Return exit code `0` for success
+* Return exit code `1` for failure
+
+---
+
+### Verify Script Exit Status
+
+Execute the script and confirm that the appropriate exit code is returned.
+
+---
 
 ## Environment Information
 
-A sample file has been preconfigured for this exercise.
+A sample file has been preconfigured for this assessment.
 
 File location:
 
@@ -49,11 +91,11 @@ Expected output:
 
 ---
 
-# Task : Create a Script Using Exit Codes
-
-> **Note:** Follow the specified file names and paths exactly to ensure validation succeeds.
+## Implementation Steps
 
 ### Step 1: Navigate to the Scripts Directory
+
+Run:
 
 ```bash
 cd ~/scripts
@@ -141,6 +183,8 @@ Ctrl + X
 
 ### Step 5: Make the Script Executable
 
+Run:
+
 ```bash
 chmod +x file_check.sh
 ```
@@ -161,7 +205,7 @@ Expected output should include:
 
 ### Step 6: Execute the Script
 
-Run the script:
+Run:
 
 ```bash
 ./file_check.sh
@@ -201,33 +245,83 @@ Your solution is successful when:
 * The script returns exit code `0` when the file exists.
 * The script returns exit code `1` when the file does not exist.
 
+<validation step="33df1f62-1141-4bc2-bf22-cecb8bf6abe3" />
+
+
+
+## Instructions
+
+* Connect to the Linux virtual machine.
+* Verify that `/opt/data/testfile.txt` exists.
+* Navigate to the scripts directory.
+* Create the required shell script.
+* Configure the script to verify file existence.
+* Ensure the script returns the correct exit codes.
+* Make the script executable before running it.
+* Verify the output and exit code before performing validation.
+
 ---
 
-## Validation Requirements
+## Evaluation Criteria
 
-Validation will verify that:
+Your submission will be evaluated based on:
 
-* `~/scripts/file_check.sh` exists.
-* The script contains success and failure exit codes.
-* The script checks for `/opt/data/testfile.txt`.
-* The script returns exit code `0` when the file exists.
-* The script returns exit code `1` when the file is missing.
+* Correct creation of the shell script.
+* Proper file existence verification.
+* Accurate use of exit codes.
+* Successful script execution.
+* Correct status message display.
+* Successful validation completion.
 
-<validation step="33df1f62-1141-4bc2-bf22-cecb8bf6abe3" />
+---
+
+## Expected Output
+
+When the file exists:
+
+```text
+File exists.
+```
+
+Followed by:
+
+```bash
+echo $?
+```
+
+Expected result:
+
+```text
+0
+```
+
+When the file does not exist:
+
+```text
+File not found.
+```
+
+Followed by:
+
+```bash
+echo $?
+```
+
+Expected result:
+
+```text
+1
+```
 
 ---
 
 ## Completion Criteria
 
-You have successfully completed this exercise when:
+You have successfully completed the assessment when:
 
-* A shell script named `file_check.sh` exists.
-* The script verifies file existence.
-* The script uses exit codes correctly.
+* A shell script named `file_check.sh` exists in the scripts directory.
+* The script verifies file existence correctly.
+* The script returns appropriate exit codes.
 * Validation completes successfully.
 
----
-
-## Summary
-
-In this exercise, you created a shell script that checks whether a file exists and returns appropriate exit codes to indicate success or failure. Exit codes are widely used in Linux administration, automation, monitoring, and orchestration tools to determine whether commands and scripts completed successfully.
+You have successfully completed the Assessment.

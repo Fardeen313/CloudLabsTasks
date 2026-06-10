@@ -1,16 +1,30 @@
-# Scenario 2 : Monitor Service and Restart
+# Shell Scripting Assessment Lab
 
-## Objective
+## Lab Overview
 
-Services are critical components of Linux systems that provide application functionality and background processing. System administrators frequently monitor services to ensure they remain operational and can quickly recover from unexpected outages.
+In this lab, you will use Linux shell scripting to monitor and manage system services. You will verify the status of the Apache HTTP Server (HTTPD), simulate a service outage by stopping the service, and then create a shell script that automatically detects and starts the service when it is not running.
 
-In this exercise, you will verify the status of the Apache HTTP Server (HTTPD), simulate a service outage by stopping the service, and then create a shell script that automatically detects and starts the service when it is not running.
+Service monitoring and recovery are common administrative responsibilities in Linux environments. Automating these tasks helps ensure application availability and reduces manual intervention during service failures.
 
-This exercise demonstrates how shell scripting can be used to automate service monitoring and recovery tasks commonly performed in Linux administration.
+## Scenario
 
-### Learning Outcomes
+You have recently joined an Infrastructure Operations team as a Linux Administrator.
 
-After completing this exercise, you will be able to:
+The organization hosts several business applications that depend on the Apache HTTP Server (HTTPD) to deliver web content. Service interruptions can impact application availability and user experience.
+
+Your manager has asked you to verify the status of the HTTPD service, simulate a service outage, and develop a monitoring script that automatically starts the service whenever it is found to be stopped.
+
+You have been provided access to a Linux virtual machine with HTTPD preinstalled and configured.
+
+## Solution
+
+To address this requirement, you will first manually stop the HTTPD service and verify that it is no longer running. You will then create a shell script that checks the service status and automatically starts the service if it is inactive.
+
+The solution demonstrates common Linux administration tasks including service management, conditional logic, process monitoring, and automated recovery using shell scripting.
+
+## Learning Objectives
+
+After completing this lab, you will be able to:
 
 * Check the status of Linux services.
 * Stop and start services using systemctl.
@@ -18,13 +32,11 @@ After completing this exercise, you will be able to:
 * Implement conditional logic within shell scripts.
 * Automate basic service recovery operations.
 
-### Estimated Time
+## Estimated Time
 
 **20 Minutes**
 
 ---
-
-
 
 ## Environment Information
 
@@ -46,7 +58,9 @@ sudo systemctl is-active httpd
 
 # Task 1: Stop the HTTPD Service
 
-In this task, you will manually stop the HTTPD service.
+## Task Overview
+
+In this task, you will manually stop the HTTPD service and verify that it is no longer running.
 
 ### Step 1: Verify Current Service Status
 
@@ -90,7 +104,7 @@ inactive
 
 ---
 
-## Success Criteria
+## Task 1 Success Criteria
 
 The HTTPD service must be in the following state:
 
@@ -98,11 +112,19 @@ The HTTPD service must be in the following state:
 inactive
 ```
 
-You can verify this using:
+Verify using:
 
 ```bash
 sudo systemctl is-active httpd
 ```
+
+---
+
+## Validation Check
+
+VALIDATION CHECK
+
+Task 1 – Stop HTTPD Service
 
 <validation step="dfb21bdb-d7ab-4a73-88b8-9123867891d8" />
 
@@ -110,9 +132,11 @@ sudo systemctl is-active httpd
 
 # Task 2: Create a Service Monitoring Script
 
+## Task Overview
+
 In this task, you will create a shell script that checks whether the HTTPD service is running and automatically starts it if it is stopped.
 
-> **Note:** Follow the specified file names and paths exactly to ensure validation succeeds.
+> Note: Follow the specified file names and paths exactly to ensure validation succeeds.
 
 ### Step 1: Navigate to the Scripts Directory
 
@@ -189,7 +213,7 @@ Verify permissions:
 ls -l monitor_service.sh
 ```
 
-Expected output should include:
+Expected output should contain:
 
 ```text
 -rwx
@@ -223,7 +247,7 @@ active
 
 ---
 
-## Success Criteria
+## Task 2 Success Criteria
 
 Your solution is successful when:
 
@@ -234,7 +258,7 @@ Your solution is successful when:
 * The script executes successfully without errors.
 * The HTTPD service is running after the script executes.
 
-You can verify the service status using:
+Verify using:
 
 ```bash
 sudo systemctl is-active httpd
@@ -246,7 +270,33 @@ Expected output:
 active
 ```
 
+---
+
+## Validation Check
+
+Task 2 – Monitor and Restart HTTPD Service
+
 <validation step="0d980599-73b0-41a3-b768-87c5c004307d" />
+
+---
+
+## Evaluation Criteria
+
+Your submission will be evaluated based on:
+
+### Task 1
+
+* Correctly stopping the HTTPD service.
+* Successfully verifying the service state.
+* Validation completion.
+
+### Task 2
+
+* Correct creation of the monitoring script.
+* Proper use of service status checks.
+* Correct implementation of conditional logic.
+* Successful service recovery.
+* Validation completion.
 
 ---
 
@@ -254,7 +304,7 @@ active
 
 ### Task 1 Validation
 
-Validation will verify that:
+Validation will verify:
 
 * The HTTPD service has been stopped.
 * The service state is:
@@ -265,7 +315,7 @@ inactive
 
 ### Task 2 Validation
 
-Validation will verify that:
+Validation will verify:
 
 * The file `~/scripts/monitor_service.sh` exists.
 * The script references the `httpd` service.
@@ -276,7 +326,7 @@ Validation will verify that:
 
 ## Completion Criteria
 
-You have successfully completed this exercise when:
+You have successfully completed the assessment when:
 
 * The HTTPD service has been manually stopped.
 * A service monitoring script has been created.
@@ -284,8 +334,4 @@ You have successfully completed this exercise when:
 * The HTTPD service is running after script execution.
 * Both validation steps complete successfully.
 
----
-
-## Summary
-
-In this exercise, you monitored the status of a Linux service and automated service recovery using a shell script. By implementing service status checks and conditional start logic, you created a simple monitoring solution that can help maintain service availability in Linux environments.
+You have successfully completed the Assessment.

@@ -234,8 +234,6 @@ Validation will verify the following:
 * The total error count is displayed.
 * The script executes successfully without errors.
 
-VALIDATION CHECK
-
 <validation step="7bd312ef-23f1-4a65-b833-a6c7e5399e5b" />
 
 ---

@@ -1,35 +1,74 @@
-# Scenario 3 : Automate Script Execution Using Cron
+# Shell Scripting Assessment Lab
 
-## Objective
+## Scenario 3: Automate Script Execution Using Cron
 
-System administrators frequently automate repetitive tasks using cron jobs. Common examples include generating reports, collecting system information, running maintenance scripts, and creating scheduled backups.
+### Lab Overview
 
-In this exercise, you will create a shell script that generates a simple system report and then configure a cron job to execute the script automatically at regular intervals.
+In this assessment, you will create a shell script that generates a simple system report and configure a cron job to execute the script automatically at scheduled intervals.
 
-This exercise demonstrates how Linux task scheduling can be used to automate recurring administrative tasks.
+System administrators commonly use cron jobs to automate repetitive tasks such as generating reports, collecting system information, monitoring services, and performing routine maintenance. By automating these activities, organizations can improve operational efficiency and reduce manual effort.
 
-### Learning Outcomes
+### Scenario
 
-After completing this exercise, you will be able to:
+You have recently joined the Linux Operations team as a System Administrator.
 
-* Create a shell script that generates output.
-* Make a shell script executable.
-* Configure cron jobs.
-* Verify scheduled task execution.
-* Monitor automated script output.
+The organization requires automated system reporting to help monitor server activity and maintain historical records of system events. Your manager has requested that you create a shell script that records the current date and time into a log file and then schedule the script to execute automatically using cron.
 
-### Estimated Time
+You have been provided access to a Linux virtual machine and must complete the reporting automation solution.
 
-**20 Minutes**
+### Solution
+
+To address this requirement, you will create a shell script named **system_report.sh** that appends the current date and time to a log file located at:
+
+```bash
+/tmp/system_report.log
+```
+
+After creating and testing the script, you will configure a cron job to execute the script automatically every minute, ensuring that new timestamp entries are continuously added to the report file.
 
 ---
 
+## Assessment Objectives
 
-# Task 1: Create a Scheduled Reporting Script
+### Task 1: Create a Scheduled Reporting Script
 
-> **Note:** Follow the specified file names and paths exactly to ensure validation succeeds.
+Create a shell script named:
 
-### Step 1: Navigate to the Scripts Directory
+```bash
+system_report.sh
+```
+
+The script must:
+
+* Append the current date and time to `/tmp/system_report.log`
+* Execute successfully without errors
+* Generate report output automatically when executed
+
+---
+
+### Task 2: Configure a Cron Job
+
+Create a cron job that executes:
+
+```bash
+~/scripts/system_report.sh
+```
+
+The cron job must:
+
+* Run automatically every minute
+* Continue generating new timestamp entries
+* Execute without manual intervention
+
+---
+
+## Implementation Steps
+
+### Task 1: Create the Reporting Script
+
+#### Step 1: Navigate to the Scripts Directory
+
+Run:
 
 ```bash
 cd ~/scripts
@@ -49,7 +88,7 @@ Expected output:
 
 ---
 
-### Step 2: Create the Script
+#### Step 2: Create the Script
 
 Create a new shell script:
 
@@ -59,11 +98,9 @@ nano system_report.sh
 
 ---
 
-### Step 3: Configure the Script
+#### Step 3: Configure the Script
 
-The script must:
-
-* Append the current date and time to:
+The script must append the current date and time to:
 
 ```bash
 /tmp/system_report.log
@@ -77,7 +114,7 @@ Wed Jun 3 10:15:01 UTC 2026
 
 ---
 
-### Step 4: Save the Script
+#### Step 4: Save the Script
 
 Save and exit Nano:
 
@@ -89,7 +126,9 @@ Ctrl + X
 
 ---
 
-### Step 5: Make the Script Executable
+#### Step 5: Make the Script Executable
+
+Run:
 
 ```bash
 chmod +x system_report.sh
@@ -109,15 +148,15 @@ Expected output should include:
 
 ---
 
-### Step 6: Test the Script
+#### Step 6: Test the Script
 
-Run the script manually:
+Execute:
 
 ```bash
 ./system_report.sh
 ```
 
-Verify the report file:
+Verify output:
 
 ```bash
 cat /tmp/system_report.log
@@ -127,38 +166,15 @@ You should see a timestamp entry.
 
 ---
 
-## Success Criteria
-
-The following file must exist:
-
-```bash
-~/scripts/system_report.sh
-```
-
-The script must:
-
-* Execute successfully.
-* Write data to `/tmp/system_report.log`.
-* Append the current date and time.
-
----
-
-## Validation Requirements
-
-Validation will verify that:
-
-* `system_report.sh` exists.
-* The script is executable.
-* The script writes output to `/tmp/system_report.log`.
-* The log file contains at least one timestamp entry.
-
 <validation step="65ec2094-7768-48a6-a5fa-2a714c795f49" />
 
 ---
 
-# Task 2: Schedule Script Execution
+## Task 2: Configure Automated Execution
 
-### Step 1: Open the Crontab Editor
+### Step 1: Open Crontab Editor
+
+Run:
 
 ```bash
 crontab -e
@@ -166,11 +182,11 @@ crontab -e
 
 ---
 
-### Step 2: Create a Scheduled Task
+### Step 2: Create Scheduled Task
 
-Configure the script to execute every five minutes.
+Configure the script to execute every minute.
 
-The cron job should execute:
+The scheduled task must execute:
 
 ```bash
 /home/<inject key="VMUserName" enableCopy="true"/>/scripts/system_report.sh
@@ -184,7 +200,7 @@ Save and exit the editor.
 
 ---
 
-### Step 4: Verify the Cron Entry
+### Step 4: Verify Cron Configuration
 
 Display configured cron jobs:
 
@@ -192,13 +208,13 @@ Display configured cron jobs:
 crontab -l
 ```
 
-Verify that your scheduled task is listed.
+Verify that your scheduled task appears in the output.
 
 ---
 
 ### Step 5: Verify Automated Execution
 
-Wait approximately 5 minutes.
+Wait approximately one minute.
 
 Review the report file:
 
@@ -206,55 +222,56 @@ Review the report file:
 cat /tmp/system_report.log
 ```
 
-You should notice additional timestamp entries being appended automatically.
+You should observe additional timestamp entries being appended automatically.
 
 Example:
 
 ```text
 Wed Jun 3 10:15:01 UTC 2026
-Wed Jun 3 10:20:01 UTC 2026
-Wed Jun 3 10:25:01 UTC 2026
+Wed Jun 3 10:16:01 UTC 2026
+Wed Jun 3 10:17:01 UTC 2026
 ```
 
 ---
-
-## Success Criteria
-
-Your configuration is successful when:
-
-* A cron job exists for `system_report.sh`.
-* The schedule runs every 1 minutes.
-* New entries continue to appear in `/tmp/system_report.log`.
-* The script executes automatically without manual intervention.
-
----
-
-## Validation Requirements
-
-Validation will verify that:
-
-* `system_report.sh` exists.
-* A cron job references `system_report.sh`.
-* The cron schedule is configured for every 1 minutes.
-* `/tmp/system_report.log` exists.
-* The log file contains multiple timestamp entries generated by automated execution.
 
 <validation step="1be7e975-2f79-4a15-af99-35df686db6cc" />
 
 ---
 
-## Completion Criteria
+## Instructions
 
-You have successfully completed this exercise when:
-
-* A shell script named `system_report.sh` exists.
-* The script appends timestamps to `/tmp/system_report.log`.
-* A cron job executes the script every 1 minutes.
-* New log entries are generated automatically.
-* Both validation checks complete successfully.
+* Connect to the Linux virtual machine.
+* Navigate to the scripts directory.
+* Create the required shell script.
+* Ensure the script writes output to `/tmp/system_report.log`.
+* Make the script executable.
+* Verify script functionality before scheduling.
+* Configure a cron job to execute the script automatically.
+* Verify automated execution before validation.
 
 ---
 
-## Summary
+## Evaluation Criteria
 
-In this exercise, you created a shell script that generates a simple system report and automated its execution using cron. This approach is commonly used in Linux environments to automate recurring administrative tasks such as monitoring, reporting, log collection, and routine maintenance activities.
+Your submission will be evaluated based on:
+
+* Correct creation of the shell script
+* Proper log file generation
+* Successful execution of the script
+* Correct cron configuration
+* Automated report generation
+* Successful completion of all validation checks
+
+---
+
+## Completion Criteria
+
+You have successfully completed the assessment when:
+
+* A shell script named `system_report.sh` exists in the scripts directory.
+* The script appends timestamps to `/tmp/system_report.log`.
+* A cron job executes the script every minute.
+* New log entries are generated automatically.
+* Both validation steps complete successfully.
+
+You have successfully completed the Assessment.
